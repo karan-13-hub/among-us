@@ -1,4 +1,4 @@
-# Evaluating Targeted Deception on Social Deduction Games — Among Us
+# Evaluating Targeted Deception on Social Deduction Games — *Among Us*
 
 > **Fork of [7vik/AmongUs](https://github.com/7vik/AmongUs)** - extended with structured prompt engineering, LLM-based behavioral evaluation, cross-dataset linear probe pipelines, and expanded model support.
 
