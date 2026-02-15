@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Among Us: A Sandbox for Agentic Deception</title>
+    <style>
+        :root {
+            --primary-color: #6DA5F2;
+            --secondary-color: #D4A27F;
+            --background-dark: #191919;
+            --background-medium: #262625;
+            --background-light: #40403E;
+            --text-light: #E5E4DF;
+            --text-dark: #666663;
+            --accent-color: #CC785C;
+            --error-color: #F14D43;
+            --success-color: #4CAF50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Decorative background elements */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            width: 300px;
+            height: 100vh;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.15;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body::before {
+            left: 0;
+            background-image: url('assets/amongus_char_1.png');
+            background-position: left center;
+        }
+
+        body::after {
+            right: 0;
+            background-image: url('assets/amongus_char_2.png');
+            background-position: right center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: var(--background-medium);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .home-screen {
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+        }
+
+        .name-input-container {
+            margin: 30px auto;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .name-input-container label {
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--secondary-color);
+            font-size: 1.2em;
+            display: block;
+        }
+
+        .name-input-container input {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 2px solid var(--text-dark);
+            background-color: var(--background-light);
+            color: var(--text-light);
+            width: 100%;
+            text-align: center;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .name-input-container input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(109, 165, 242, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary-color), #5a8fd0);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        button:disabled {
+            background: var(--background-light);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .status-bar {
+            background: linear-gradient(135deg, var(--background-light), var(--background-medium));
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-bar span {
+            margin: 5px 15px;
+            font-weight: bold;
+            color: var(--text-light);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        #gameStatus {
+            color: var(--secondary-color);
+        }
+
+        .section {
+            background-color: var(--background-light);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .map-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+            background-color: var(--background-medium);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .map-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s ease-in-out;
+            overflow: hidden;
+            padding: 20px;
+            max-height: 500px;
+        }
+
+        .map-container.hidden {
+            max-height: 0;
+            padding: 0;
+        }
+
+        .map-image {
+            max-width: 80%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .map-toggle {
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--background-light), var(--background-medium));
+            color: var(--text-light);
+            border: 1px solid var(--text-dark);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .map-toggle:hover {
+            background: linear-gradient(135deg, var(--background-medium), var(--background-light));
+        }
+
+        .human-action-area {
+            margin-top: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--background-medium), var(--background-light));
+            border-radius: 12px;
+            border: 2px solid var(--secondary-color);
+            box-shadow: 0 0 30px rgba(212, 162, 127, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        .human-action-area.active {
+            border: 2px solid var(--secondary-color);
+            box-shadow: 0 0 40px rgba(212, 162, 127, 0.4);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 30px rgba(212, 162, 127, 0.2); }
+            50% { box-shadow: 0 0 50px rgba(212, 162, 127, 0.4); }
+            100% { box-shadow: 0 0 30px rgba(212, 162, 127, 0.2); }
+        }
+
+        .action-options label {
+            display: block;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: var(--background-medium);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--text-dark);
+        }
+
+        .action-options label:hover {
+            background-color: var(--background-light);
+            transform: translateX(5px);
+        }
+
+        #speakMessage {
+            width: 100%;
+            padding: 15px;
+            margin-top: 15px;
+            border: 2px solid var(--text-dark);
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        #speakMessage:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(109, 165, 242, 0.3);
+        }
+
+        .memory-thinking-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--background-medium), var(--background-light));
+            border-radius: 12px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .memory-field textarea,
+        .thinking-field textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--text-dark);
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            border-radius: 8px;
+            min-height: 100px;
+            resize: vertical;
+            font-family: 'Segoe UI', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .memory-field textarea:focus,
+        .thinking-field textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(109, 165, 242, 0.3);
+        }
+
+        .loading {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--background-medium), var(--background-light));
+            color: var(--text-light);
+            font-weight: bold;
+        }
+
+        .error {
+            background: linear-gradient(135deg, rgba(241, 77, 67, 0.2), rgba(241, 77, 67, 0.1));
+            color: var(--error-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+            border: 1px solid var(--error-color);
+        }
+
+        #gameResult {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--background-medium), var(--background-light));
+            border-radius: 12px;
+            display: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--text-light);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 20px;
+            }
+
+            .status-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            button {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--background-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--background-light);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-dark);
+        }
+
+        .map-toggle-icon {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+
+        .map-toggle-icon.hidden {
+            transform: rotate(180deg);
+        }
+
+        /* Fix text overflow for all relevant containers */
+        .container, .section, .status-bar, .game-layout, .human-action-area,
+        .human-player-info, .memory-thinking-section, #gameStatus, #phaseInfo,
+        #stepInfo, #currentPlayerInfo, #humanPlayerName, pre, #humanPlayerInfo {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+            hyphens: auto;
+        }
+
+        /* Specifically fix pre elements to prevent horizontal overflow */
+        pre {
+            white-space: pre-wrap;
+            max-width: 100%;
+        }
+
+        .human-player-info pre {
+            white-space: pre-wrap;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 1em;
+            max-width: 100%;
+        }
+
+        .game-screen {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="home-screen" id="homeScreen">
+            <h1>Among Us: Agentic Deception</h1>
+            <p>Start a new game with a human player.</p>
+            <div class="name-input-container">
+                <label for="playerNameInput">Your Name:</label>
+                <input type="text" id="playerNameInput" value="Victor" placeholder="Enter your name">
+            </div>
+            <button id="startGameBtn" onclick="startNewGame()">Start New Game (5 Players)</button>
+             <!-- Add options for different game sizes later if needed -->
+        </div>
+
+        <div class="game-screen" id="gameScreen">
+            <h1>Game <span id="gameId"></span></h1>
+
+            <div class="status-bar">
+                 <span>Game Status: <strong id="gameStatus">Loading...</strong></span>
+                 <span>Current Phase: <strong id="phaseInfo">...</strong></span>
+                 <span>Step: <strong id="stepInfo">0/50</strong></span>
+                 <span>Turn: <strong id="currentPlayerInfo">...</strong></span>
+                 <span>Your Name: <strong id="humanPlayerName">...</strong></span>
+             </div>
+
+            <div class="game-layout">
+                <div class="section map-section">
+                    <button class="map-toggle" id="mapToggle">
+                        <span id="mapToggleText">Hide Map</span>
+                        <span class="map-toggle-icon" id="mapToggleIcon">▼</span>
+                    </button>
+                    <div class="map-container" id="mapContainer">
+                        <img src="assets/skeld.png" alt="The Skeld Map" class="map-image">
+                    </div>
+                </div>
+            </div>
+
+             <div class="section human-action-section" id="humanActionArea" style="display: none;">
+                 <h2>Your Turn! Choose an Action:</h2>
+                 <div id="humanPlayerInfo" class="human-player-info"></div>
+                 <div class="action-options" id="actionOptions"></div>
+                 <textarea id="speakMessage" placeholder="Enter your message here..."></textarea>
+                 
+                 <div class="memory-thinking-section">
+                     <h3>Optional: Add Your Thoughts</h3>
+                     <div class="memory-field">
+                         <label for="condensedMemory">Scratchpad:</label>
+                         <textarea id="condensedMemory" placeholder="Keep track of your observations and thoughts..."></textarea>
+                     </div>
+                     <div class="thinking-field">
+                         <label for="thinkingProcess">Thinking Process:</label>
+                         <textarea id="thinkingProcess" placeholder="Describe your reasoning and strategy..."></textarea>
+                     </div>
+                 </div>
+                 
+                 <button id="submitActionBtn" onclick="submitAction()">Submit Action</button>
+             </div>
+
+            <div class="loading" id="loadingIndicator">Loading game state...</div>
+            <div class="error" id="errorDisplay"></div>
+            <div id="gameResult"></div>
+
+        </div>
+    </div>
+
+    <script>
+        let currentGameId = null;
+        let gameStateInterval = null;
+        let lastGameState = null;  // Store the last valid game state
+        const API_BASE_URL = 'XXXX'; // Make sure this matches your server port
+
+        const homeScreen = document.getElementById('homeScreen');
+        const gameScreen = document.getElementById('gameScreen');
+        const gameIdDisplay = document.getElementById('gameId');
+        const gameStatusDisplay = document.getElementById('gameStatus');
+        const phaseInfoDisplay = document.getElementById('phaseInfo');
+        const humanPlayerNameDisplay = document.getElementById('humanPlayerName');
+        const playerNameInput = document.getElementById('playerNameInput');
+        const humanActionArea = document.getElementById('humanActionArea');
+        const humanPlayerInfoDiv = document.getElementById('humanPlayerInfo');
+        const actionOptionsDiv = document.getElementById('actionOptions');
+        const speakMessageInput = document.getElementById('speakMessage');
+        const submitActionBtn = document.getElementById('submitActionBtn');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const errorDisplay = document.getElementById('errorDisplay');
+        const gameResultDiv = document.getElementById('gameResult');
+        const startGameBtn = document.getElementById('startGameBtn');
+        const mapToggle = document.getElementById('mapToggle');
+        const mapToggleText = document.getElementById('mapToggleText');
+        const mapToggleIcon = document.getElementById('mapToggleIcon');
+        const mapContainer = document.getElementById('mapContainer');
+        
+        // Flag to track if we're waiting for human input
+        let waitingForHumanInput = false;
+        // Flag to track map visibility
+        let mapVisible = true;
+        // Flag to track if the game has started
+        let gameStarted = false;
+        // Store human player information
+        let humanPlayerInfo = null;
+
+        // Add error checking for DOM elements
+        function checkRequiredElements() {
+            const requiredElements = {
+                homeScreen,
+                gameScreen,
+                gameIdDisplay,
+                gameStatusDisplay,
+                phaseInfoDisplay,
+                humanPlayerNameDisplay,
+                playerNameInput,
+                humanActionArea,
+                humanPlayerInfoDiv,
+                actionOptionsDiv,
+                speakMessageInput,
+                submitActionBtn,
+                loadingIndicator,
+                errorDisplay,
+                gameResultDiv,
+                startGameBtn,
+                mapToggle,
+                mapToggleText,
+                mapToggleIcon,
+                mapContainer
+            };
+
+            const missingElements = Object.entries(requiredElements)
+                .filter(([_, element]) => element === null)
+                .map(([name]) => name);
+
+            if (missingElements.length > 0) {
+                console.error('Missing required DOM elements:', missingElements);
+                showError(`Critical Error: Missing required elements: ${missingElements.join(', ')}`);
+                return false;
+            }
+            return true;
+        }
+
+        async function startNewGame() {
+            startGameBtn.disabled = true;
+            startGameBtn.textContent = 'Starting...';
+            showLoading('Creating game instance...');
+            hideError();
+            
+            try {
+                // 1. Create the game instance
+                const startResponse = await fetch(`${API_BASE_URL}/start_game`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        game_config: "FIVE_MEMBER_GAME", // Or make this selectable
+                        include_human: true,
+                        // Add other config options if needed
+                    })
+                });
+
+                if (!startResponse.ok) {
+                    const errorData = await startResponse.json();
+                    throw new Error(`Failed to create game: ${errorData.error || startResponse.statusText}`);
+                }
+
+                const gameData = await startResponse.json();
+                currentGameId = gameData.game_id;
+                console.log("Game created:", gameData);
+                gameIdDisplay.textContent = currentGameId;
+
+                // 2. Start the game running in the background
+                showLoading('Starting game engine...');
+                const runResponse = await fetch(`${API_BASE_URL}/run_game/${currentGameId}`, {
+                    method: 'POST'
+                });
+
+                if (!runResponse.ok) {
+                     const errorData = await runResponse.json();
+                    throw new Error(`Failed to start game execution: ${errorData.error || runResponse.statusText}`);
+                }
+
+                console.log("Game run initiated");
+
+                // 3. Switch UI and start polling for state
+                homeScreen.style.display = 'none';
+                gameScreen.style.display = 'block';
+                
+                // Set the game started flag to true
+                gameStarted = true;
+                
+                // Get the human player information right after starting the game
+                await getHumanPlayerInfo();
+                
+                // Set the player name in the status bar
+                updateHumanPlayerDisplay();
+                
+                startGameStatePolling();
+                hideLoading();
+
+            } catch (error) {
+                console.error("Error starting game:", error);
+                showError(`Error: ${error.message}`);
+                 startGameBtn.disabled = false;
+                 startGameBtn.textContent = 'Start New Game (5 Players)';
+                 hideLoading();
+            }
+        }
+
+        function startGameStatePolling() {
+            if (gameStateInterval) clearInterval(gameStateInterval);
+            // Poll more frequently to ensure updates are seen
+            gameStateInterval = setInterval(updateGameState, 1000); 
+            updateGameState(); // Initial immediate update
+        }
+        
+        function stopGameStatePolling() {
+            if (gameStateInterval) {
+                clearInterval(gameStateInterval);
+                gameStateInterval = null;
+                console.log("Polling stopped while waiting for human input");
+            }
+        }
+        
+        function resumeGameStatePolling() {
+            if (!gameStateInterval && gameStarted) {
+                console.log("Resuming polling after human action");
+                startGameStatePolling();
+            }
+        }
+
+        async function updateGameState() {
+            // Skip polling if game hasn't started yet
+            if (!gameStarted || !currentGameId) return;
+            
+            // Skip polling if we're waiting for human input
+            if (waitingForHumanInput) {
+                console.log("Skipping poll while waiting for human input");
+                return;
+            }
+
+            hideError(); // Clear previous errors on successful fetch attempt
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/game/${currentGameId}/state`);
+                if (!response.ok) {
+                     const errorData = await response.json();
+                    // Stop polling on critical errors like 404
+                    if (response.status === 404 && gameStateInterval) {
+                         clearInterval(gameStateInterval);
+                         gameStateInterval = null;
+                         showError(`Game ${currentGameId} not found on server. Polling stopped.`);
+                    } else {
+                         throw new Error(`Failed to fetch game state: ${errorData.error || response.statusText}`);
+                    }
+                    hideLoading();
+                    return;
+                }
+
+                const gameState = await response.json();
+                console.log("Received game state:", gameState);
+                
+                // Save the last game state
+                lastGameState = gameState;
+                
+                // Debug information for human turn
+                if (gameState.is_human_turn) {
+                    console.log("Human turn detected in updateGameState");
+                    console.log("Human player name:", gameState.player_name);
+                    console.log("Available actions:", gameState.available_actions);
+                    
+                    // Stop polling when it's the human's turn (as requested)
+                    waitingForHumanInput = true;
+                    stopGameStatePolling();
+                }
+                
+                renderGameState(gameState);
+                hideLoading();
+
+                 // Stop polling if game is completed or errored
+                if (['completed', 'error', 'cancelled'].includes(gameState.status)) {
+                    if (gameStateInterval) clearInterval(gameStateInterval);
+                    gameStateInterval = null;
+                    console.log(`Game ${gameState.status}. Polling stopped.`);
+                    displayGameResult(gameState);
+                }
+
+            } catch (error) {
+                console.error("Error updating game state:", error);
+                // Avoid showing error if it was just a 404 handled above
+                if (!error.message.includes('not found')) {
+                    showError(`Update Error: ${error.message}`);
+                }
+                 hideLoading();
+                 // Consider stopping polling on persistent errors
+            }
+        }
+
+        function renderGameState(state) {
+            if (!checkRequiredElements()) {
+                return;
+            }
+
+            gameStatusDisplay.textContent = state.status;
+            phaseInfoDisplay.textContent = state.current_phase || 'N/A';
+            
+            // Display current step and player
+            const stepInfo = document.getElementById('stepInfo');
+            if (stepInfo) {
+                const currentStep = state.timestep || 0;
+                const maxSteps = state.max_timesteps || 50;
+                stepInfo.textContent = `${currentStep}/${maxSteps}`;
+            }
+            
+            const currentPlayerInfo = document.getElementById('currentPlayerInfo');
+            if (currentPlayerInfo) {
+                currentPlayerInfo.textContent = `${state.current_player || 'Unknown'}`;
+            }
+
+            // Use the stored human player info instead of trying to extract it from the state
+            // We only update this if we don't already have the human player info
+            if (!humanPlayerInfo) {
+                console.log("No human player info stored - will try to get it");
+                getHumanPlayerInfo();
+            } else {
+                updateHumanPlayerDisplay();
+            }
+
+            // Maintain map visibility state during updates
+            updateMapVisibility();
+
+            // Handle Human Turn
+            if (state.is_human_turn || (state.available_actions && state.available_actions.length > 0)) {
+                console.log("Human turn detected or actions available. State:", state);
+                // We don't update the human player name display here anymore
+                if (humanPlayerInfoDiv) {
+                    humanPlayerInfoDiv.innerHTML = `<pre>${state.player_info || 'No info available.'}</pre>`;
+                }
+                if (actionOptionsDiv) {
+                    actionOptionsDiv.innerHTML = '';
+                }
+                if (speakMessageInput) {
+                    speakMessageInput.style.display = 'none';
+                    speakMessageInput.value = '';
+                }
+                
+                // Reset the memory and thinking process fields
+                const condensedMemoryField = document.getElementById('condensedMemory');
+                const thinkingProcessField = document.getElementById('thinkingProcess');
+                
+                // Update the scratchpad with the value from the state if available
+                if (condensedMemoryField && state.condensed_memory !== undefined) {
+                    condensedMemoryField.value = state.condensed_memory;
+                }
+                
+                // Only reset the thinking process field, not the scratchpad
+                if (thinkingProcessField) {
+                    thinkingProcessField.value = '';
+                }
+
+                if (state.available_actions && state.available_actions.length > 0) {
+                    console.log("Available actions:", state.available_actions);
+                    state.available_actions.forEach((action, index) => {
+                        const label = document.createElement('label');
+                        const radio = document.createElement('input');
+                        radio.type = 'radio';
+                        radio.name = 'humanAction';
+                        radio.value = index;
+                        radio.id = `action_${index}`;
+
+                        const actionName = action.name;
+                        const requiresMessage = action.requires_message;
+
+                        if (typeof actionName !== 'string' || typeof requiresMessage !== 'boolean') {
+                             console.error("Invalid action structure received from backend:", action);
+                             return;
+                         }
+
+                        radio.dataset.requiresMessage = requiresMessage;
+                        radio.addEventListener('change', handleActionSelection);
+
+                        label.appendChild(radio);
+                        label.appendChild(document.createTextNode(` ${actionName}`));
+                        label.htmlFor = `action_${index}`;
+                        actionOptionsDiv.appendChild(label);
+                    });
+                    if (submitActionBtn) {
+                        submitActionBtn.disabled = true;
+                    }
+                } else {
+                    console.log("No actions available in state:", state);
+                    if (actionOptionsDiv) {
+                        actionOptionsDiv.innerHTML = '<p>No actions available currently.</p>';
+                    }
+                    if (submitActionBtn) {
+                        submitActionBtn.disabled = true;
+                    }
+                }
+                
+                // Force display the human action area
+                if (humanActionArea) {
+                    humanActionArea.style.display = 'block';
+                    // Add a class to make it more visible
+                    humanActionArea.classList.add('active');
+                    
+                    // Scroll to the human action area
+                    setTimeout(() => {
+                        humanActionArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 500);
+                }
+            } else {
+                if (humanActionArea) {
+                    humanActionArea.style.display = 'none';
+                    // Remove the active class
+                    humanActionArea.classList.remove('active');
+                }
+            }
+        }
+
+        function handleActionSelection(event) {
+            const selectedRadio = event.target;
+            const requiresMessage = selectedRadio.dataset.requiresMessage === 'true';
+            if (requiresMessage) {
+                speakMessageInput.style.display = 'block';
+                submitActionBtn.disabled = !speakMessageInput.value.trim(); // Enable only if message is non-empty
+            } else {
+                 speakMessageInput.style.display = 'none';
+                 submitActionBtn.disabled = false; // Enable immediately for non-speak actions
+            }
+        }
+        
+        // Add listener for speak message input to enable/disable button
+        speakMessageInput.addEventListener('input', () => {
+             const selectedRadio = document.querySelector('input[name="humanAction"]:checked');
+             if (selectedRadio && selectedRadio.dataset.requiresMessage === 'true') {
+                 submitActionBtn.disabled = !speakMessageInput.value.trim();
+             }
+        });
+
+        async function submitAction() {
+            const selectedRadio = document.querySelector('input[name="humanAction"]:checked');
+            if (!selectedRadio) {
+                showError("Please select an action.");
+                return;
+            }
+
+            const actionIndex = parseInt(selectedRadio.value);
+            const requiresMessage = selectedRadio.dataset.requiresMessage === 'true';
+            let message = null;
+
+            if (requiresMessage) {
+                message = speakMessageInput.value.trim();
+                if (!message) {
+                    showError("Please enter a message for the SPEAK action.");
+                    return;
+                }
+            }
+
+            // Get the values from the new fields
+            const condensedMemory = document.getElementById('condensedMemory').value.trim();
+            const thinkingProcess = document.getElementById('thinkingProcess').value.trim();
+
+            const actionData = {
+                action_index: actionIndex,
+                message: message,
+                condensed_memory: condensedMemory,
+                thinking_process: thinkingProcess
+            };
+
+            console.log("Submitting action:", actionData);
+            showLoading('Submitting action...');
+            submitActionBtn.disabled = true; // Disable while submitting
+            hideError();
+
+            try {
+                // Submit the action directly without checking game state again
+                const response = await fetch(`${API_BASE_URL}/game/${currentGameId}/action`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(actionData)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.detail || response.statusText);
+                }
+
+                console.log("Action submitted successfully");
+                humanActionArea.style.display = 'none'; // Hide action area after submission
+                
+                // Reset the waiting flag and resume polling
+                waitingForHumanInput = false;
+                resumeGameStatePolling();
+
+            } catch (error) {
+                console.error("Error submitting action:", error);
+                showError(`Submit Error: ${error.message}`);
+                submitActionBtn.disabled = false; // Re-enable on error
+            }
+            hideLoading();
+        }
+
+        function displayGameResult(state) {
+            let resultMessage = `Game Over! Status: ${state.status.toUpperCase()}`;
+            if (state.error_message) {
+                 resultMessage += `<br>Error: ${state.error_message}`;
+            } else if (state.results) {
+                // Format the results nicely (assuming summary_json structure)
+                resultMessage += `<br>Winner: ${state.results.winner || 'Unknown'}`;
+                resultMessage += `<br>Reason: ${state.results.reason || 'N/A'}`;
+                // Add more details from results if needed
+            }
+            gameResultDiv.innerHTML = resultMessage;
+            gameResultDiv.style.display = 'block';
+        }
+
+        function showLoading(message = 'Loading...') {
+            loadingIndicator.textContent = message;
+            loadingIndicator.style.display = 'block';
+        }
+
+        function hideLoading() {
+            loadingIndicator.style.display = 'none';
+        }
+
+        function showError(message) {
+            errorDisplay.textContent = message;
+            errorDisplay.style.display = 'block';
+        }
+
+        function hideError() {
+            errorDisplay.style.display = 'none';
+        }
+
+        // Initial setup
+        document.addEventListener('DOMContentLoaded', () => {
+             // Any setup needed when the page loads
+             console.log("Among Us Web UI Initialized");
+             
+             // Set up map toggle functionality
+             mapToggle.addEventListener('click', () => {
+                 mapVisible = !mapVisible;
+                 updateMapVisibility();
+             });
+        });
+        
+        // Function to update map visibility
+        function updateMapVisibility() {
+            if (mapVisible) {
+                mapContainer.classList.remove('hidden');
+                mapToggleText.textContent = 'Hide Map';
+                mapToggleIcon.classList.remove('hidden');
+            } else {
+                mapContainer.classList.add('hidden');
+                mapToggleText.textContent = 'Show Map';
+                mapToggleIcon.classList.add('hidden');
+            }
+        }
+
+        // Function to get human player information
+        async function getHumanPlayerInfo() {
+            if (!currentGameId) return;
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/game/${currentGameId}/human_info`);
+                if (response.ok) {
+                    const info = await response.json();
+                    humanPlayerInfo = info;
+                    console.log("Received human player info:", humanPlayerInfo);
+                    updateHumanPlayerDisplay();
+                }
+            } catch (error) {
+                console.error("Error fetching human player info:", error);
+                // Don't show error to user - just log it
+            }
+        }
+        
+        // Function to update the human player display
+        function updateHumanPlayerDisplay() {
+            if (!humanPlayerNameDisplay) return;
+            
+            const playerName = playerNameInput.value || 'Victor';
+            
+            if (humanPlayerInfo) {
+                console.log("Using human player info:", humanPlayerInfo);
+                
+                // Extract player number from the player_name field
+                let playerNumber = '';
+                if (humanPlayerInfo.player_name) {
+                    const nameMatch = humanPlayerInfo.player_name.match(/Player\s*(\d+)/i);
+                    if (nameMatch && nameMatch.length >= 2) {
+                        playerNumber = nameMatch[1];
+                    }
+                }
+                
+                // Get color directly from the player_color field
+                const playerColor = humanPlayerInfo.player_color || '';
+                
+                if (playerNumber && playerColor) {
+                    humanPlayerNameDisplay.textContent = `${playerName} (Player ${playerNumber}: ${playerColor})`;
+                } else {
+                    humanPlayerNameDisplay.textContent = playerName;
+                }
+            } else {
+                humanPlayerNameDisplay.textContent = playerName;
+            }
+        }
+
+    </script>
+</body>
+</html>

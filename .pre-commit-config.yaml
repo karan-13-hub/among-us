@@ -1,0 +1,38 @@
+repos:
+  - repo: XXXX
+    rev: v4.4.0
+    hooks:
+      - id: check-ast
+      - id: check-json
+      - id: check-symlinks
+      - id: check-merge-conflict
+      - id: trailing-whitespace
+        exclude: ^./expt-logs/
+  - repo: XXXX
+    rev: 24.10.0
+    hooks:
+      - id: black
+        exclude: ^./expt-logs/
+  - repo: XXXX
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        exclude: ^./expt-logs/
+  - repo: XXXX
+    rev: 6.1.0
+    hooks:
+      - id: flake8
+        args: ['--max-line-length=100']
+  - repo: XXXX
+    rev: v1.5.1
+    hooks:
+      - id: mypy
+        exclude: ^./expt-logs/
+  - repo: local
+    hooks:
+      - id: python-run-check
+        name: Ensure Python scripts run
+        entry: python
+        args: ['-m', 'compileall', '.']
+        language: system
+        files: \.py$
