@@ -141,31 +141,6 @@ Three interchangeable prompt files allow A/B testing different prompt strategies
 
 Switch by changing the import in `agent.py` line 13.
 
-### LLM-Based Behavioral Evaluation
-- New `evals_prompts.py` defines structured evaluation prompts that score each agent action on four dimensions: **Awareness**, **Lying**, **Deception**, and **Planning** (1–10 scale).
-- `eval.py` runs async evaluation with rate limiting, exponential backoff, and configurable evaluator models (default: `llama-3.3-70b-instruct` via OpenRouter).
-- `eval_qwen3_4b.ipynb` provides an end-to-end evaluation notebook for Qwen3-4B game logs.
-
-### All-Layers Linear Probe Pipeline
-- New `all_layers_cache_train_eval.py` provides a single end-to-end script that caches activations → trains linear probes → evaluates cross-dataset generalization and generates ROC curves.
-- Added Phi-4 and Llama-3.3-70B model configs with layer-specific activation caching.
-- Cross-dataset evaluation: probes trained on one dataset (e.g., TruthfulQA) are tested against AmongUs, RepEng, DishonestQA, and others.
-
-### Expanded Model Support
-`main.py` now supports a wide range of models via OpenRouter:
-- `microsoft/phi-4`, `qwen/qwen3-235b-a22b`, `qwen/qwen-2.5-7b-instruct`
-- `google/gemma-3-4b-it`, `deepseek/deepseek-r1`, `deepseek/deepseek-r1-distill-llama-70b`
-- `anthropic/claude-3.7-sonnet:thinking`, `openai/o3`, `openai/o4-mini-high`
-- And more — see `main.py` for the full list.
-
-### Experiment Automation
-- `run_games.sh` defines batch experiments (100 games each) for model matchups: Phi-4 vs Llama-3.3-70B, Phi-4 vs Phi-4, etc.
-- `main.py` adds `--tournament_style` (random / 1on1), `--crewmate_llm`, and `--impostor_llm` flags for fine-grained control.
-- Experiment logs auto-indexed as `YYYY-MM-DD_exp_N`.
-
-### New Notebooks
-Exploratory notebooks for activation caching, data deduplication, GPU utilization, HuggingFace dataset loading, local model speed testing, and OpenRouter API usage.
-
 ---
 
 ## Setup
@@ -187,70 +162,44 @@ Exploratory notebooks for activation caching, data deduplication, GPU utilizatio
    pip install -r requirements.txt
    ```
 
-## Run Games
+## Running the Evaluation Notebook
 
-To run games of various LLMs playing against each other:
+The primary entry point is `evaluations/eval_qwen3_4b.ipynb` — a self-contained notebook that runs games with a local model, evaluates agent behavior, and produces analysis visualizations.
 
-```bash
-python main.py --crewmate_llm microsoft/phi-4 --impostor_llm meta-llama/llama-3.3-70b-instruct
-```
+### What the Notebook Does
 
-You will need a `.env` file with an [OpenRouter](https://openrouter.ai/) API key.
+| Section | Description |
+|---------|-------------|
+| **1. Setup** | Imports, project paths, loads environment variables |
+| **2. Configuration** | Sets the local model path, vLLM server port, evaluator model (`gpt-4o-mini`), number of games (default 5), game config (5 players, 1 impostor) |
+| **3. Launch vLLM Server & Patch Agent** | Starts a vLLM OpenAI-compatible server for the local Qwen-3-4B model and monkey-patches `LLMAgent` so all agents hit the local endpoint instead of OpenRouter |
+| **4. Run Games** | Plays N games with local Qwen-3-4B as both Crewmate and Impostor, logging every action, thought, and speech to JSONL |
+| **5. Load & Inspect Logs** | Parses compact agent logs into a DataFrame for analysis |
+| **6. LLM-Based Evaluation** | Scores each game timestep on four dimensions — **Awareness**, **Lying**, **Deception**, **Planning** (1–10 scale) — using a separate evaluator LLM via OpenRouter |
+| **7. Analysis & Visualization** | Aggregates scores and produces charts (per-role breakdowns, per-game trends, score distributions) |
+| **8. Summary & Cleanup** | Shuts down the vLLM server and summarizes results |
 
-To run batch experiments:
+### Prerequisites
 
-```bash
-bash run_games.sh
-```
+- **GPU with sufficient VRAM** — Qwen-3-4B requires ~8 GB; the notebook selects a GPU via `CUDA_VISIBLE_DEVICES`
+- **Local model weights** — update `LOCAL_MODEL_PATH` in the Configuration cell to point to your Qwen-3-4B checkpoint
+- **vLLM installed** — the notebook launches vLLM as a subprocess (`pip install vllm`)
+- **OpenRouter API key** — required for the evaluator LLM (GPT-4o-mini). Add `OPENROUTER_API_KEY` to a `.env` file in the project root
 
-This runs predefined 100-game matchups across model pairings (Phi-4, Llama-3.3-70B combinations).
-
-Alternatively, you can download 400 full-game logs (for `Phi-4-15b` and `Llama-3.3-70b-instruct`) and 810 game summaries from the [HuggingFace](https://huggingface.co/) dataset.
-
-## LLM-Based Evaluation
-
-To evaluate agent actions on Awareness, Lying, Deception, and Planning:
-
-```bash
-bash evaluations/run_evals.sh
-```
-
-Or run the evaluation notebook for a specific model:
-
-```
-evaluations/eval_qwen3_4b.ipynb
-```
-
-This scores each game step using an LLM evaluator and outputs structured JSONL results.
-
-## Caching Activations
-
-To cache LLM activations for linear probe analysis:
+### Quick Start
 
 ```bash
-python linear-probes/cache_activations.py --dataset <dataset_name>
+cd evaluations
+jupyter notebook eval_qwen3_4b.ipynb
 ```
 
-This is computationally expensive — GPU recommended. Use `configs.py` to configure the model (Phi-4, Llama-3, GPT-2) and target layers.
+Run the cells sequentially. The notebook will:
+1. Start a local vLLM server for your model
+2. Run 5 Among Us games (configurable via `NUM_GAMES`)
+3. Score every agent action with GPT-4o-mini
+4. Generate visualizations of Awareness, Lying, Deception, and Planning scores
 
-## Training & Evaluating Linear Probes
-
-**Option A — Individual steps:**
-
-```bash
-python linear-probes/train_probes.py
-python linear-probes/evaluate_probes.py
-```
-
-**Option B — End-to-end pipeline (recommended):**
-
-```bash
-python linear-probes/all_layers_cache_train_eval.py
-```
-
-This caches activations, trains probes, and evaluates cross-dataset generalization (AmongUs, TruthfulQA, DishonestQA, RepEng) in a single run, generating ROC curves and metrics.
-
-Results are stored in `linear-probes/results/`.
+Results are saved to `evaluations/results/`.
 
 ## Project Structure
 
