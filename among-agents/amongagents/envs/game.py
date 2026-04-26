@@ -80,6 +80,8 @@ class AmongUs:
         self.message_system = MessageSystem(game_config)
         self.game_over = False
         self.winner = None
+        self.epistemic_log: list = []
+        self.collect_epistemic: bool = False
         self.last_update = time.time()
         self.all_phases = ["meeting", "task"]
         self.summary_json = {f"Game {game_index}": {"config": game_config}}
@@ -232,7 +234,24 @@ class AmongUs:
             json.dump(self.summary_json, f, separators=(",", ": "))
             f.write("\n")
 
+        self._save_epistemic_log()
         return winner
+
+    def _save_epistemic_log(self) -> None:
+        """Persist collected epistemic snapshots to a JSONL file."""
+        if not self.epistemic_log:
+            return
+        exp_path = os.environ.get("EXPERIMENT_PATH", ".")
+        out_path = os.path.join(exp_path, "epistemic-states.jsonl")
+        with open(out_path, "a") as f:
+            for entry in self.epistemic_log:
+                serialisable = {k: v for k, v in entry.items() if k != "_meta"}
+                meta = entry.get("_meta", {})
+                serialisable["_meta"] = {
+                    k: v for k, v in meta.items() if k != "raw_response"
+                }
+                f.write(json.dumps(serialisable, separators=(",", ": ")) + "\n")
+        print(f"[EPISTEMIC] Saved {len(self.epistemic_log)} snapshots → {out_path}")
 
     def check_game_over(self):
         num_impostors = sum(
@@ -891,7 +910,17 @@ class AmongUs:
 
         # Build ordered speaker list for discussion
         living_agents = [a for a in self.agents if a.player.is_alive]
-        
+
+        # ═══ EPISTEMIC STATE COLLECTION (pre-meeting baseline) ═══
+        if getattr(self, 'collect_epistemic', False):
+            for agent in living_agents:
+                if hasattr(agent, 'collect_epistemic_state'):
+                    snapshot = await agent.collect_epistemic_state(
+                        self.timestep, self.players, "pre_meeting"
+                    )
+                    if snapshot:
+                        self.epistemic_log.append(snapshot)
+
         # Staged Discussion (Testimony → Accusation/Defense → Final Arguments)
         for round_num in range(self.game_config["discussion_rounds"]):
             stage_names = {0: "TESTIMONY", 1: "ACCUSATION/DEFENSE", 2: "FINAL ARGUMENTS"}
@@ -931,6 +960,16 @@ class AmongUs:
             # Update game state after each round
             self.check_actions()
             self.update_map()
+
+        # ═══ EPISTEMIC STATE COLLECTION (post-discussion, pre-vote) ═══
+        if getattr(self, 'collect_epistemic', False):
+            for agent in living_agents:
+                if hasattr(agent, 'collect_epistemic_state'):
+                    snapshot = await agent.collect_epistemic_state(
+                        self.timestep, self.players, "post_meeting"
+                    )
+                    if snapshot:
+                        self.epistemic_log.append(snapshot)
 
         # Voting phase (only living players can vote — exactly once each)
         print("Voting phase")
