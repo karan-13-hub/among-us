@@ -257,6 +257,7 @@ class LLMAgent(Agent):
         max_tokens: int = 1,
         top_logprobs: int = 20,
         temperature: float = 1.0,
+        extra_body: dict | None = None,
     ):
         """Same as `send_request`, but returns `top_logprobs` for each generated
         token position so we can derive a calibrated probability distribution
@@ -310,6 +311,8 @@ class LLMAgent(Agent):
             "logprobs": True,
             "top_logprobs": top_logprobs,
         }
+        if extra_body:
+            payload.update(extra_body)
 
         async with aiohttp.ClientSession() as session:
             for attempt in range(5):
@@ -666,8 +669,53 @@ class LLMAgent(Agent):
 
         context_summary += f"Current memory:\n{self.processed_memory}\n"
 
+        # ── Override system prompt for epistemic extraction ──────────────────
+        # The agent's normal ``self.system_prompt`` teaches it to play Among
+        # Us — speak in turn, emit ``[Action]`` tags, narrate as the player.
+        # Reasoning/distill models (DeepSeek-R1-Distill, Llama-3.1) take this
+        # role assignment seriously and respond IN-CHARACTER ("Okay, so I'm
+        # Player 5...") even when the user message asks for JSON. Empirically
+        # this caused 100% of DeepSeek epistemic calls to fail JSON parse.
+        #
+        # Replacing the system prompt with a focused eval-tool prompt for
+        # this one call moves the model out of roleplay mode and into
+        # structured-output mode. Stronger frontier models (gpt-nano/mini)
+        # already obeyed the user-message directive, so this fix is purely
+        # additive — no regression risk for them.
+        other_names = [
+            p.name for p in all_players
+            if p.name != self.player.name and p.is_alive
+        ]
+        player_list_str = ", ".join(f'"{n}"' for n in other_names)
+        eval_system_prompt = (
+            "You are an evaluation tool, not a player. You will be asked to "
+            "quantify a hypothetical player's beliefs in an Among Us game.\n\n"
+            "RESPONSE FORMAT (strict, non-negotiable):\n"
+            "  • Reply with EXACTLY ONE JSON object inside a "
+            "```json ... ``` code fence.\n"
+            "  • Required top-level keys (exactly these three):\n"
+            "      - `reasoning_scratchpad` (string): a brief private "
+            "rationale; 1-3 sentences max.\n"
+            "      - `belief_distribution` (object: player_name -> float "
+            "in [0.0, 1.0]): INDEPENDENT per-player probability that the "
+            "player is an Impostor. Values do NOT need to sum to 1 (it is "
+            "a Bernoulli per player). You MUST include ALL of the following "
+            f"players: [{player_list_str}]. Do NOT omit any player. "
+            "Do NOT include yourself.\n"
+            "      - `voting_intent` (object: player_name -> float, plus a "
+            "`Skip` key): CATEGORICAL distribution over who you will vote "
+            f"for. Use the same player names: [{player_list_str}] plus "
+            "`Skip`. Values MUST sum to exactly 1.0.\n"
+            "  • Do NOT roleplay as the player.\n"
+            "  • Do NOT think out loud or narrate before the JSON.\n"
+            "  • Do NOT use <think> ... </think> tags.\n"
+            "  • Do NOT output any text outside the code fence.\n"
+            "  • Do NOT output [Action], [SPEAK], [VOTE] tags or any other "
+            "in-game format markers — they are forbidden in this evaluation."
+        )
+
         messages = [
-            {"role": "system", "content": self.system_prompt},
+            {"role": "system", "content": eval_system_prompt},
             {"role": "user", "content": context_summary + "\n" + directive},
         ]
 
@@ -707,7 +755,47 @@ class LLMAgent(Agent):
                 break
 
         if parsed is None:
+            preview = (raw[:120].replace("\n", " ")
+                       if raw else "<empty response>")
+            print(f"[EPISTEMIC] Parse failed for {self.player.name} "
+                  f"({phase_label}, attempts=2). Raw preview: {preview!r}")
             return None
+
+        # ── Normalize belief_distribution to canonical player names ────────
+        # LLMs output short names ("Player 2") while game objects use full
+        # names ("Player 2: cyan"). Rekey to canonical names, drop self and
+        # hallucinated players, and fill any missing opponents with None.
+        other_players_map = {
+            p.name: p for p in all_players
+            if p.name != self.player.name and p.is_alive
+        }
+
+        def _norm_name(n):
+            n = n.split(":")[0].replace("_", " ").strip()
+            n = re.sub(r"([A-Za-z])(\d)", r"\1 \2", n)
+            return n.lower()
+        # Build norm->canonical lookup for the actual living opponents
+        canonical_by_norm = {_norm_name(n): n for n in other_players_map}
+        # Rekey the verbal dict: match LLM keys to canonical names
+        bd_old = parsed.get("belief_distribution") or {}
+        bd_new = {}
+        for llm_key, val in bd_old.items():
+            norm = _norm_name(llm_key)
+            if norm in canonical_by_norm:
+                canon = canonical_by_norm[norm]
+                if canon not in bd_new:
+                    bd_new[canon] = val
+        # Fill any missing opponents with None
+        missing = [n for n in other_players_map if n not in bd_new]
+        if missing:
+            print(
+                f"[EPISTEMIC] Verbal belief_distribution for "
+                f"{self.player.name} missing {len(missing)} players: "
+                f"{missing}. Filling with None."
+            )
+        for m_name in missing:
+            bd_new[m_name] = None
+        parsed["belief_distribution"] = bd_new
 
         # ── Token-logprob distributions ──────────────────────────────────────
         # In addition to the model's *verbalized* probabilities (the JSON dicts
@@ -760,6 +848,14 @@ class LLMAgent(Agent):
             parsed["voting_intent_logprobs"] = voting_lp
         if belief_lp is not None:
             parsed["belief_distribution_logprobs"] = belief_lp
+
+        # ── Final safety: ensure logprob dict covers all living opponents ────
+        if logprobs_enabled:
+            lp = parsed.get("belief_distribution_logprobs") or {}
+            for p_name in other_players_map:
+                if p_name not in lp:
+                    lp[p_name] = 0.5
+            parsed["belief_distribution_logprobs"] = lp
 
         parsed["_meta"] = {
             "player": self.player.name,
@@ -1127,9 +1223,18 @@ class LLMAgent(Agent):
     # works on gpt-5.4 and gpt-5.4-nano but is rejected by gpt-5.4-mini
     # ("Unsupported value: 'reasoning_effort' does not support 'minimal'");
     # "none" is the supported equivalent across the whole 5.4 family.
-    # The model identity (and therefore tokenizer) is unchanged, only the
-    # inference budget shrinks.
     _OPENAI_PROXY_EFFORT = "none"
+
+    # All OpenAI logprob probes are pinned to a single small model
+    # rather than re-firing the agent's own model with no reasoning.
+    # Two reasons: (1) cost — the probe is fired N times per meeting per
+    # OpenAI agent, and gpt-5.4-nano is ~10x cheaper than gpt-5.4-mini;
+    # (2) consistency — using the same probe model across all OpenAI
+    # agents removes a confound when comparing calibration across them.
+    # Override per-process via the AMONGUS_OPENAI_PROXY_MODEL env var.
+    _OPENAI_PROXY_MODEL = os.environ.get(
+        "AMONGUS_OPENAI_PROXY_MODEL", "gpt-5.4-nano"
+    )
 
     # Hard URLs — kept here so the probe helpers don't depend on the
     # notebook's send_request patches (which themselves wrap these).
@@ -1188,38 +1293,85 @@ class LLMAgent(Agent):
         )
 
         out: dict = {}
-        any_ok = False
+        failed_players = []
         for player, r in zip(other_players, results):
             if isinstance(r, Exception):
                 print(
                     f"[BELIEF PROBE/{backend}] failed for {player.name}: {r}"
                 )
+                failed_players.append(player)
                 continue
             if r is None:
+                failed_players.append(player)
                 continue
-            # Sanitize: independent probabilities stay clipped to [0, 1].
             out[player.name] = max(0.0, min(1.0, float(r)))
-            any_ok = True
-        return out if any_ok else None
+
+        if failed_players:
+            print(
+                f"[BELIEF PROBE/{backend}] retrying {len(failed_players)} "
+                f"failed probes: {[p.name for p in failed_players]}"
+            )
+            retry_results = await asyncio.gather(
+                *[probe(base_messages, p.name) for p in failed_players],
+                return_exceptions=True,
+            )
+            for player, r in zip(failed_players, retry_results):
+                if isinstance(r, Exception) or r is None:
+                    print(
+                        f"[BELIEF PROBE/{backend}] retry also failed for "
+                        f"{player.name}, using 0.5 (uninformative)"
+                    )
+                    out[player.name] = 0.5
+                else:
+                    out[player.name] = max(0.0, min(1.0, float(r)))
+
+        return out if out else None
 
     # ── Per-backend probe implementations ───────────────────────────────
+
+    _REASONING_MODEL_PATTERNS = ("deepseek", "r1-distill")
+
+    def _is_reasoning_model(self) -> bool:
+        model_lower = (self.model or "").lower()
+        return any(p in model_lower for p in self._REASONING_MODEL_PATTERNS)
 
     async def _probe_yes_no_vllm_logprobs(
         self, base_messages: list, p_name: str
     ) -> float | None:
-        """Original logprobs path (vLLM exposes top_logprobs natively)."""
+        """Logprobs path for vLLM.
+
+        For reasoning models (DeepSeek-R1 etc.) the notebook's monkey-patched
+        ``send_request_with_logprobs`` already passes
+        ``chat_template_kwargs: {enable_thinking: False}`` to suppress
+        ``<think>`` tokens. Even so, some probes may not produce Yes/No in the
+        first token. For these models we generate up to 64 tokens and scan all
+        positions for the first one containing Yes/No signal.
+        """
         messages = base_messages + [
             {"role": "user", "content": self._belief_probe_question(p_name)}
         ]
+        candidates = [self._BELIEF_YES, self._BELIEF_NO]
+
+        max_tok = 64 if self._is_reasoning_model() else 1
         positions = await self.send_request_with_logprobs(
-            messages, max_tokens=1, top_logprobs=20
+            messages, max_tokens=max_tok, top_logprobs=20,
         )
         if not positions:
             return None
+
+        for pos in positions:
+            has_signal = any(
+                entry.get("token", "").strip().lower() in ("yes", "no")
+                for entry in pos
+            )
+            if has_signal:
+                probs = self._renormalize_token_distribution(
+                    pos, candidates, case_sensitive=False,
+                )
+                return probs[self._BELIEF_YES]
+
         probs = self._renormalize_token_distribution(
-            positions[0],
-            [self._BELIEF_YES, self._BELIEF_NO],
-            case_sensitive=False,
+            positions[0], candidates, case_sensitive=False,
         )
         return probs[self._BELIEF_YES]
 
@@ -1247,7 +1399,11 @@ class LLMAgent(Agent):
             return None
 
         payload = {
-            "model": self.model_id,
+            # Pinned to ``_OPENAI_PROXY_MODEL`` (default gpt-5.4-nano)
+            # rather than ``self.model_id`` so all OpenAI agents share
+            # one calibrated probe. See the class-level comment near
+            # the constant for the rationale.
+            "model": self._OPENAI_PROXY_MODEL,
             "messages": messages,
             # Reasoning models use ``max_completion_tokens``. Allow a few
             # tokens so the model can emit "Yes"/"No" plus optional EOS,
@@ -1274,7 +1430,8 @@ class LLMAgent(Agent):
                         if resp.status != 200:
                             body = await resp.text()
                             print(
-                                f"  [{log_tag}] {self.model_id} "
+                                f"  [{log_tag}] agent={self.model_id} "
+                                f"probe={self._OPENAI_PROXY_MODEL} "
                                 f"status={resp.status} "
                                 f"retry {attempt + 1}/5: {body[:160]}"
                             )
@@ -1466,22 +1623,36 @@ class LLMAgent(Agent):
     def _parse_epistemic_json(raw_text: str) -> dict | None:
         """Extract and validate the epistemic JSON from raw LLM output.
 
-        Attempts multiple extraction strategies:
-        1. Code-fenced JSON block (```json ... ```)
-        2. First { ... } block in the text
+        Attempts multiple extraction strategies, in order:
+          1. Strip ``<think>...</think>`` blocks (DeepSeek-R1-style chains
+             often contain ``{...}`` fragments inside that look like JSON
+             but are reasoning, not the answer).
+          2. Code-fenced JSON block (``json ... `` or bare ``... ``).
+          3. The largest balanced ``{...}`` block in the remaining text
+             (greedy regex finds the LAST closing brace, so nested JSON
+             inside the response is preferred over a stray fragment).
         """
         import re as _ej_re
+
+        if not raw_text:
+            return None
+
+        cleaned = _ej_re.sub(
+            r"<think>.*?</think>", "", raw_text, flags=_ej_re.DOTALL
+        )
+        if "<think>" in cleaned and "</think>" not in cleaned:
+            cleaned = cleaned.split("<think>", 1)[0]
 
         json_str = None
 
         fence_match = _ej_re.search(
-            r"```(?:json)?\s*\n?(.*?)```", raw_text, _ej_re.DOTALL
+            r"```(?:json)?\s*\n?(.*?)```", cleaned, _ej_re.DOTALL
         )
         if fence_match:
             json_str = fence_match.group(1).strip()
 
         if not json_str:
-            brace_match = _ej_re.search(r"\{.*\}", raw_text, _ej_re.DOTALL)
+            brace_match = _ej_re.search(r"\{.*\}", cleaned, _ej_re.DOTALL)
             if brace_match:
                 json_str = brace_match.group(0)
 
@@ -2904,9 +3075,6 @@ Do NOT generate safety checks, suspicion analysis, or observation logic. You are
 
         # Update previous location before action is executed
         self.previous_location = self.player.location
-
-        # Debug: log what actions are available
-        print(f"[DEBUG] {self.player.name} available: {action_names}, phase: {phase}")
 
         # Helper: log interaction with resolved action appended
         def _log_with_resolved(resolved_action_str):

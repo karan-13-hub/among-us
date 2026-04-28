@@ -22,6 +22,18 @@ FIVE_MEMBER_GAME = {
     "max_timesteps": 20,
 }
 
+SIX_MEMBER_GAME = {
+    "num_players": 6,
+    "num_impostors": 1,
+    "num_common_tasks": 1,
+    "num_short_tasks": 1,
+    "num_long_tasks": 1,
+    "discussion_rounds": 3,
+    "max_num_buttons": 2,
+    "kill_cooldown": 3,
+    "max_timesteps": 30,
+}
+
 SEVEN_MEMBER_GAME = {
     "num_players": 7,
     "num_impostors": 2,
@@ -31,5 +43,5 @@ SEVEN_MEMBER_GAME = {
     "discussion_rounds": 3,
     "max_num_buttons": 2,
     "kill_cooldown": 3,
-    "max_timesteps": 50,
+    "max_timesteps": 40,
 }
