@@ -18,7 +18,7 @@
 #   ./kill_eval_bg.sh                # graceful (SIGTERM the tmux session)
 set -euo pipefail
 
-EVAL_BASE="${EVAL_BASE:-${HOME}/eval-among-us}"
+EVAL_BASE="${EVAL_BASE:-/data/kmirakho/eval-cross-play-among-us}"
 
 SESSION="among-us-eval"
 _LAUNCH_DIR="$(cd "$(dirname "$0")" && pwd)"

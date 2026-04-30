@@ -25,9 +25,9 @@ if [[ ! -f "$NOTEBOOK" ]]; then
   exit 1
 fi
 
-CONDA_BASE="${CONDA_BASE:-${HOME}/anaconda3}"
+CONDA_BASE="${CONDA_BASE:-/data/kmirakho/anaconda3}"
 CONDA_ENV="${CONDA_ENV:-verl-py}"
-EVAL_BASE="${EVAL_BASE:-${HOME}/eval-among-us}"
+EVAL_BASE="${EVAL_BASE:-/data/kmirakho/eval-cross-play-among-us}"
 SECRETS_ENV="${SECRETS_ENV:-}"
 
 NB_DIR="$(dirname "$NOTEBOOK")"
