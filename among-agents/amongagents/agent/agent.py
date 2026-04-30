@@ -1671,6 +1671,10 @@ class LLMAgent(Agent):
                 print(f"[EPISTEMIC] JSON parse failed: {e}")
                 return None
 
+        if not isinstance(data, dict):
+            print(f"[EPISTEMIC] Parsed JSON is {type(data).__name__}, expected dict")
+            return None
+
         required = {"belief_distribution", "voting_intent"}
         if not required.issubset(data.keys()):
             print(f"[EPISTEMIC] Missing keys: {required - data.keys()}")
