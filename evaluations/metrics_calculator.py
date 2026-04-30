@@ -344,8 +344,14 @@ class TheoryOfMindEvaluator:
 
         shifts: list[float] = []
         for j in innocent:
-            b_pre = pre_map.get(j, {}).get(impostor_name, 0.5)
-            b_post = post_map.get(j, {}).get(impostor_name, 0.5)
+            pre_beliefs = pre_map.get(j, {})
+            post_beliefs = post_map.get(j, {})
+            has_pre = impostor_name in pre_beliefs
+            has_post = impostor_name in post_beliefs
+            if not has_pre and not has_post:
+                continue
+            b_pre = float(pre_beliefs.get(impostor_name, 0.5))
+            b_post = float(post_beliefs.get(impostor_name, 0.5))
             shifts.append(b_pre - b_post)
 
         return float(np.mean(shifts)) if shifts else 0.0
