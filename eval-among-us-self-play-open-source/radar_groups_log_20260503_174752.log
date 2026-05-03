@@ -1,0 +1,22 @@
+[17:47:52] Reading /home/yjangir1/scratchhbharad2/users/yjangir1/karan/eval-among-us-selfplay-rerun/results/2026-05-03_tom_metrics_sweep.csv
+[17:47:52]   rows=10309  models=['deepseek-r1-distill-llama-8B', 'deepseek-r1-distill-qwen-32b', 'gemma-4-26B-A4B-it', 'gemma-4-31b', 'gemma-4-E4B-it', 'llama-3.1-8b', 'llama-3.2-3b-instruct', 'llama-3.3-70b', 'qwen3-32b', 'qwen3-4b', 'qwen3-8B']
+[17:47:52] 
+FAMILY radar plots
+[17:47:52]   family: gemma  models=['gemma-4-E4B-it', 'gemma-4-26B-A4B-it', 'gemma-4-31b']
+[17:47:52]     saved 2026-05-03_radar_family_gemma.png  crew_pareto=['gemma-4-E4B-it', 'gemma-4-26B-A4B-it', 'gemma-4-31b']  imp_pareto=['gemma-4-E4B-it', 'gemma-4-26B-A4B-it', 'gemma-4-31b']
+[17:47:52]   family: qwen3  models=['qwen3-4b', 'qwen3-8B', 'qwen3-32b']
+[17:47:53]     saved 2026-05-03_radar_family_qwen3.png  crew_pareto=['qwen3-4b', 'qwen3-8B', 'qwen3-32b']  imp_pareto=['qwen3-4b', 'qwen3-8B', 'qwen3-32b']
+[17:47:53]   family: llama  models=['llama-3.2-3b-instruct', 'llama-3.1-8b', 'llama-3.3-70b']
+[17:47:53]     saved 2026-05-03_radar_family_llama.png  crew_pareto=['llama-3.2-3b-instruct', 'llama-3.1-8b', 'llama-3.3-70b']  imp_pareto=['llama-3.2-3b-instruct', 'llama-3.1-8b', 'llama-3.3-70b']
+[17:47:53]   family: deepseek-distill  models=['deepseek-r1-distill-llama-8B', 'deepseek-r1-distill-qwen-32b']
+[17:47:54]     saved 2026-05-03_radar_family_deepseek-distill.png  crew_pareto=['deepseek-r1-distill-llama-8B', 'deepseek-r1-distill-qwen-32b']  imp_pareto=['deepseek-r1-distill-llama-8B', 'deepseek-r1-distill-qwen-32b']
+[17:47:54] 
+SIZE-BUCKET radar plots
+[17:47:54]   size: small_3-4B  models=['llama-3.2-3b-instruct', 'qwen3-4b', 'gemma-4-E4B-it']
+[17:47:54]     saved 2026-05-03_radar_size_small_3-4B.png  crew_pareto=['llama-3.2-3b-instruct', 'qwen3-4b', 'gemma-4-E4B-it']  imp_pareto=['llama-3.2-3b-instruct', 'qwen3-4b', 'gemma-4-E4B-it']
+[17:47:54]   size: medium_8B  models=['deepseek-r1-distill-llama-8B', 'llama-3.1-8b', 'qwen3-8B']
+[17:47:54]     saved 2026-05-03_radar_size_medium_8B.png  crew_pareto=['deepseek-r1-distill-llama-8B', 'llama-3.1-8b', 'qwen3-8B']  imp_pareto=['deepseek-r1-distill-llama-8B', 'qwen3-8B']
+[17:47:54]   size: large_26-70B  models=['deepseek-r1-distill-qwen-32b', 'gemma-4-26B-A4B-it', 'gemma-4-31b', 'qwen3-32b', 'llama-3.3-70b']
+[17:47:55]     saved 2026-05-03_radar_size_large_26-70B.png  crew_pareto=['deepseek-r1-distill-qwen-32b', 'gemma-4-26B-A4B-it', 'gemma-4-31b', 'qwen3-32b', 'llama-3.3-70b']  imp_pareto=['deepseek-r1-distill-qwen-32b', 'gemma-4-26B-A4B-it', 'gemma-4-31b', 'qwen3-32b', 'llama-3.3-70b']
+[17:47:55] 
+DONE

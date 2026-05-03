@@ -1,0 +1,306 @@
+[17:15:43] Log file: /home/yjangir1/scratchhbharad2/users/yjangir1/karan/eval-among-us-selfplay-rerun/results/run_log_20260503_171543.log
+[17:15:43] Sweep root:    /home/yjangir1/scratchhbharad2/users/yjangir1/karan/eval-among-us-selfplay-rerun
+[17:15:43] Results path:  /home/yjangir1/scratchhbharad2/users/yjangir1/karan/eval-among-us-selfplay-rerun/results
+[17:15:43] Importing metrics_calculator from among-us/evaluations ...
+[17:15:43]   metrics_calculator imported OK
+[17:15:43] 
+[17:15:43] ================================================================================
+[17:15:43] STAGE 0 — Discovering experiments
+[17:15:43] ================================================================================
+[17:15:43]   skip top-level: RESULTS_SUMMARY.md (not a model)
+[17:15:43]   skip top-level: RESULTS_SUMMARY_metrics.csv (not a model)
+[17:15:43]   skip top-level: RESULTS_SUMMARY_winrates.csv (not a model)
+[17:15:43]   scanning model dir: deepseek-r1-distill-llama-8B
+[17:15:43]     OK   2026-05-02_exp_3  cfg=4C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_4  cfg=4C_2I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_5  cfg=5C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_6  cfg=5C_2I  game-logs=30
+[17:15:43]   scanning model dir: deepseek-r1-distill-qwen-32b
+[17:15:43]     OK   2026-05-02_exp_0  cfg=4C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_1  cfg=4C_2I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_2  cfg=5C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_3  cfg=5C_2I  game-logs=30
+[17:15:43]   scanning model dir: gemma-4-26B-A4B-it
+[17:15:43]     OK   2026-05-02_exp_4  cfg=4C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_5  cfg=4C_2I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_6  cfg=5C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_7  cfg=5C_2I  game-logs=30
+[17:15:43]   scanning model dir: gemma-4-31b
+[17:15:43]     OK   2026-05-02_exp_0  cfg=4C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_1  cfg=4C_2I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_2  cfg=5C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_3  cfg=5C_2I  game-logs=30
+[17:15:43]   scanning model dir: gemma-4-E4B-it
+[17:15:43]     OK   2026-05-02_exp_0  cfg=4C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_1  cfg=4C_2I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_2  cfg=5C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_3  cfg=5C_2I  game-logs=30
+[17:15:43]   scanning model dir: llama-3.1-8b
+[17:15:43]     OK   2026-05-02_exp_10  cfg=5C_2I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_7  cfg=4C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_8  cfg=4C_2I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_9  cfg=5C_1I  game-logs=30
+[17:15:43]   scanning model dir: llama-3.2-3b-instruct
+[17:15:43]     OK   2026-04-28_exp_5  cfg=4C_2I  game-logs=30
+[17:15:43]     OK   2026-04-28_exp_6  cfg=5C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_0  cfg=4C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_1  cfg=5C_2I  game-logs=30
+[17:15:43]   scanning model dir: llama-3.3-70b
+[17:15:43]     OK   2026-05-02_exp_0  cfg=4C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_1  cfg=4C_2I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_2  cfg=5C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_3  cfg=5C_2I  game-logs=30
+[17:15:43]   scanning model dir: qwen3-32b
+[17:15:43]     OK   2026-05-02_exp_0  cfg=4C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_1  cfg=4C_2I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_2  cfg=5C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_3  cfg=5C_2I  game-logs=30
+[17:15:43]   scanning model dir: qwen3-4b
+[17:15:43]     OK   2026-05-02_exp_0  cfg=4C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_1  cfg=4C_2I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_2  cfg=5C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_3  cfg=5C_2I  game-logs=30
+[17:15:43]   scanning model dir: qwen3-8B
+[17:15:43]     OK   2026-04-27_exp_0  cfg=4C_1I  game-logs=30
+[17:15:43]     OK   2026-04-27_exp_1  cfg=4C_2I  game-logs=30
+[17:15:43]     OK   2026-04-27_exp_2  cfg=5C_1I  game-logs=30
+[17:15:43]     OK   2026-05-02_exp_2  cfg=5C_2I  game-logs=30
+[17:15:43]   skip top-level: results (not a model)
+[17:15:43]   skip top-level: run_full_analysis.py (not a model)
+[17:15:43]   skip top-level: vllm-logs (not a model)
+[17:15:43] 
+[17:15:43] Discovered 44 experiments across 11 models.
+[17:15:43] Per-model experiment counts:
+[17:15:43]   deepseek-r1-distill-llama-8B         n_exp= 4  configs=['4C_1I', '4C_2I', '5C_1I', '5C_2I']
+[17:15:43]   deepseek-r1-distill-qwen-32b         n_exp= 4  configs=['4C_1I', '4C_2I', '5C_1I', '5C_2I']
+[17:15:43]   gemma-4-26B-A4B-it                   n_exp= 4  configs=['4C_1I', '4C_2I', '5C_1I', '5C_2I']
+[17:15:43]   gemma-4-31b                          n_exp= 4  configs=['4C_1I', '4C_2I', '5C_1I', '5C_2I']
+[17:15:43]   gemma-4-E4B-it                       n_exp= 4  configs=['4C_1I', '4C_2I', '5C_1I', '5C_2I']
+[17:15:43]   llama-3.1-8b                         n_exp= 4  configs=['4C_1I', '4C_2I', '5C_1I', '5C_2I']
+[17:15:43]   llama-3.2-3b-instruct                n_exp= 4  configs=['4C_1I', '4C_2I', '5C_1I', '5C_2I']
+[17:15:43]   llama-3.3-70b                        n_exp= 4  configs=['4C_1I', '4C_2I', '5C_1I', '5C_2I']
+[17:15:43]   qwen3-32b                            n_exp= 4  configs=['4C_1I', '4C_2I', '5C_1I', '5C_2I']
+[17:15:43]   qwen3-4b                             n_exp= 4  configs=['4C_1I', '4C_2I', '5C_1I', '5C_2I']
+[17:15:43]   qwen3-8B                             n_exp= 4  configs=['4C_1I', '4C_2I', '5C_1I', '5C_2I']
+[17:15:43] 
+[17:15:43] ================================================================================
+[17:15:43] STAGE 1 — Computing per-experiment ToM metrics (verbalized)  [44 experiments]
+[17:15:43] ================================================================================
+[17:15:53]   [  1/44] verb deepseek-r1-distill-llama-8B     4C_1I  2026-05-02_exp_3      rows= 171  (9.8s) -> deepseek-r1-distill-llama-8B_2026-05-02_exp_3_tom_metrics.csv
+[17:16:09]   [  2/44] verb deepseek-r1-distill-llama-8B     4C_2I  2026-05-02_exp_4      rows= 243  (15.9s) -> deepseek-r1-distill-llama-8B_2026-05-02_exp_4_tom_metrics.csv
+[17:16:25]   [  3/44] verb deepseek-r1-distill-llama-8B     5C_1I  2026-05-02_exp_5      rows= 254  (15.7s) -> deepseek-r1-distill-llama-8B_2026-05-02_exp_5_tom_metrics.csv
+[17:16:54]   [  4/44] verb deepseek-r1-distill-llama-8B     5C_2I  2026-05-02_exp_6      rows= 403  (28.7s) -> deepseek-r1-distill-llama-8B_2026-05-02_exp_6_tom_metrics.csv
+[17:17:01]   [  5/44] verb deepseek-r1-distill-qwen-32b     4C_1I  2026-05-02_exp_0      rows= 151  (7.6s) -> deepseek-r1-distill-qwen-32b_2026-05-02_exp_0_tom_metrics.csv
+[17:17:34]   [  6/44] verb deepseek-r1-distill-qwen-32b     4C_2I  2026-05-02_exp_1      rows= 449  (32.9s) -> deepseek-r1-distill-qwen-32b_2026-05-02_exp_1_tom_metrics.csv
+[17:17:57]   [  7/44] verb deepseek-r1-distill-qwen-32b     5C_1I  2026-05-02_exp_2      rows= 417  (22.8s) -> deepseek-r1-distill-qwen-32b_2026-05-02_exp_2_tom_metrics.csv
+[17:18:45]   [  8/44] verb deepseek-r1-distill-qwen-32b     5C_2I  2026-05-02_exp_3      rows= 629  (47.9s) -> deepseek-r1-distill-qwen-32b_2026-05-02_exp_3_tom_metrics.csv
+[17:18:49]   [  9/44] verb gemma-4-26B-A4B-it               4C_1I  2026-05-02_exp_4      rows=  85  (4.1s) -> gemma-4-26B-A4B-it_2026-05-02_exp_4_tom_metrics.csv
+[17:19:00]   [ 10/44] verb gemma-4-26B-A4B-it               4C_2I  2026-05-02_exp_5      rows= 171  (11.5s) -> gemma-4-26B-A4B-it_2026-05-02_exp_5_tom_metrics.csv
+[17:19:12]   [ 11/44] verb gemma-4-26B-A4B-it               5C_1I  2026-05-02_exp_6      rows= 207  (11.8s) -> gemma-4-26B-A4B-it_2026-05-02_exp_6_tom_metrics.csv
+[17:19:31]   [ 12/44] verb gemma-4-26B-A4B-it               5C_2I  2026-05-02_exp_7      rows= 277  (18.3s) -> gemma-4-26B-A4B-it_2026-05-02_exp_7_tom_metrics.csv
+[17:19:36]   [ 13/44] verb gemma-4-31b                      4C_1I  2026-05-02_exp_0      rows=  97  (5.1s) -> gemma-4-31b_2026-05-02_exp_0_tom_metrics.csv
+[17:19:48]   [ 14/44] verb gemma-4-31b                      4C_2I  2026-05-02_exp_1      rows= 203  (12.7s) -> gemma-4-31b_2026-05-02_exp_1_tom_metrics.csv
+[17:19:58]   [ 15/44] verb gemma-4-31b                      5C_1I  2026-05-02_exp_2      rows= 174  (9.5s) -> gemma-4-31b_2026-05-02_exp_2_tom_metrics.csv
+[17:20:13]   [ 16/44] verb gemma-4-31b                      5C_2I  2026-05-02_exp_3      rows= 257  (15.1s) -> gemma-4-31b_2026-05-02_exp_3_tom_metrics.csv
+[17:20:17]   [ 17/44] verb gemma-4-E4B-it                   4C_1I  2026-05-02_exp_0      rows=  89  (4.4s) -> gemma-4-E4B-it_2026-05-02_exp_0_tom_metrics.csv
+[17:20:28]   [ 18/44] verb gemma-4-E4B-it                   4C_2I  2026-05-02_exp_1      rows= 176  (10.3s) -> gemma-4-E4B-it_2026-05-02_exp_1_tom_metrics.csv
+[17:20:40]   [ 19/44] verb gemma-4-E4B-it                   5C_1I  2026-05-02_exp_2      rows= 178  (12.7s) -> gemma-4-E4B-it_2026-05-02_exp_2_tom_metrics.csv
+[17:20:59]   [ 20/44] verb gemma-4-E4B-it                   5C_2I  2026-05-02_exp_3      rows= 283  (18.7s) -> gemma-4-E4B-it_2026-05-02_exp_3_tom_metrics.csv
+[17:21:25]   [ 21/44] verb llama-3.1-8b                     5C_2I  2026-05-02_exp_10     rows= 418  (25.3s) -> llama-3.1-8b_2026-05-02_exp_10_tom_metrics.csv
+[17:21:33]   [ 22/44] verb llama-3.1-8b                     4C_1I  2026-05-02_exp_7      rows= 189  (8.9s) -> llama-3.1-8b_2026-05-02_exp_7_tom_metrics.csv
+[17:21:46]   [ 23/44] verb llama-3.1-8b                     4C_2I  2026-05-02_exp_8      rows= 241  (13.0s) -> llama-3.1-8b_2026-05-02_exp_8_tom_metrics.csv
+[17:22:02]   [ 24/44] verb llama-3.1-8b                     5C_1I  2026-05-02_exp_9      rows= 277  (15.4s) -> llama-3.1-8b_2026-05-02_exp_9_tom_metrics.csv
+[17:22:20]   [ 25/44] verb llama-3.2-3b-instruct            4C_2I  2026-04-28_exp_5      rows= 256  (18.5s) -> llama-3.2-3b-instruct_2026-04-28_exp_5_tom_metrics.csv
+[17:22:45]   [ 26/44] verb llama-3.2-3b-instruct            5C_1I  2026-04-28_exp_6      rows= 311  (24.8s) -> llama-3.2-3b-instruct_2026-04-28_exp_6_tom_metrics.csv
+[17:22:57]   [ 27/44] verb llama-3.2-3b-instruct            4C_1I  2026-05-02_exp_0      rows= 201  (11.5s) -> llama-3.2-3b-instruct_2026-05-02_exp_0_tom_metrics.csv
+[17:23:31]   [ 28/44] verb llama-3.2-3b-instruct            5C_2I  2026-05-02_exp_1      rows= 405  (34.7s) -> llama-3.2-3b-instruct_2026-05-02_exp_1_tom_metrics.csv
+[17:23:38]   [ 29/44] verb llama-3.3-70b                    4C_1I  2026-05-02_exp_0      rows= 158  (6.1s) -> llama-3.3-70b_2026-05-02_exp_0_tom_metrics.csv
+[17:23:49]   [ 30/44] verb llama-3.3-70b                    4C_2I  2026-05-02_exp_1      rows= 207  (11.6s) -> llama-3.3-70b_2026-05-02_exp_1_tom_metrics.csv
+[17:24:00]   [ 31/44] verb llama-3.3-70b                    5C_1I  2026-05-02_exp_2      rows= 196  (11.1s) -> llama-3.3-70b_2026-05-02_exp_2_tom_metrics.csv
+[17:24:19]   [ 32/44] verb llama-3.3-70b                    5C_2I  2026-05-02_exp_3      rows= 334  (18.3s) -> llama-3.3-70b_2026-05-02_exp_3_tom_metrics.csv
+[17:24:24]   [ 33/44] verb qwen3-32b                        4C_1I  2026-05-02_exp_0      rows=  97  (5.6s) -> qwen3-32b_2026-05-02_exp_0_tom_metrics.csv
+[17:24:39]   [ 34/44] verb qwen3-32b                        4C_2I  2026-05-02_exp_1      rows= 210  (14.9s) -> qwen3-32b_2026-05-02_exp_1_tom_metrics.csv
+[17:24:50]   [ 35/44] verb qwen3-32b                        5C_1I  2026-05-02_exp_2      rows= 157  (10.9s) -> qwen3-32b_2026-05-02_exp_2_tom_metrics.csv
+[17:25:09]   [ 36/44] verb qwen3-32b                        5C_2I  2026-05-02_exp_3      rows= 269  (19.2s) -> qwen3-32b_2026-05-02_exp_3_tom_metrics.csv
+[17:25:13]   [ 37/44] verb qwen3-4b                         4C_1I  2026-05-02_exp_0      rows=  60  (3.6s) -> qwen3-4b_2026-05-02_exp_0_tom_metrics.csv
+[17:25:24]   [ 38/44] verb qwen3-4b                         4C_2I  2026-05-02_exp_1      rows= 164  (10.9s) -> qwen3-4b_2026-05-02_exp_1_tom_metrics.csv
+[17:25:34]   [ 39/44] verb qwen3-4b                         5C_1I  2026-05-02_exp_2      rows= 145  (10.4s) -> qwen3-4b_2026-05-02_exp_2_tom_metrics.csv
+[17:25:52]   [ 40/44] verb qwen3-4b                         5C_2I  2026-05-02_exp_3      rows= 250  (18.0s) -> qwen3-4b_2026-05-02_exp_3_tom_metrics.csv
+[17:25:59]   [ 41/44] verb qwen3-8B                         4C_1I  2026-04-27_exp_0      rows= 139  (6.7s) -> qwen3-8B_2026-04-27_exp_0_tom_metrics.csv
+[17:26:13]   [ 42/44] verb qwen3-8B                         4C_2I  2026-04-27_exp_1      rows= 202  (13.7s) -> qwen3-8B_2026-04-27_exp_1_tom_metrics.csv
+[17:26:26]   [ 43/44] verb qwen3-8B                         5C_1I  2026-04-27_exp_2      rows= 206  (13.0s) -> qwen3-8B_2026-04-27_exp_2_tom_metrics.csv
+[17:26:45]   [ 44/44] verb qwen3-8B                         5C_2I  2026-05-02_exp_2      rows= 303  (19.1s) -> qwen3-8B_2026-05-02_exp_2_tom_metrics.csv
+[17:26:45] Combined verbal: 10309 rows | 11 models × 4 configs -> 2026-05-03_tom_metrics_sweep.csv
+[17:26:45] 
+[17:26:45] ================================================================================
+[17:26:45] STAGE 2 — Computing per-experiment ToM metrics (logprob)  [44 experiments]
+[17:26:45] ================================================================================
+[17:26:55]   [  1/44] logp deepseek-r1-distill-llama-8B     4C_1I  2026-05-02_exp_3      rows= 171  (10.1s)
+[17:27:11]   [  2/44] logp deepseek-r1-distill-llama-8B     4C_2I  2026-05-02_exp_4      rows= 243  (16.3s)
+[17:27:27]   [  3/44] logp deepseek-r1-distill-llama-8B     5C_1I  2026-05-02_exp_5      rows= 254  (16.1s)
+[17:27:57]   [  4/44] logp deepseek-r1-distill-llama-8B     5C_2I  2026-05-02_exp_6      rows= 403  (29.4s)
+[17:28:05]   [  5/44] logp deepseek-r1-distill-qwen-32b     4C_1I  2026-05-02_exp_0      rows= 151  (8.0s)
+[17:28:38]   [  6/44] logp deepseek-r1-distill-qwen-32b     4C_2I  2026-05-02_exp_1      rows= 449  (33.5s)
+[17:29:01]   [  7/44] logp deepseek-r1-distill-qwen-32b     5C_1I  2026-05-02_exp_2      rows= 417  (23.3s)
+[17:29:50]   [  8/44] logp deepseek-r1-distill-qwen-32b     5C_2I  2026-05-02_exp_3      rows= 629  (48.6s)
+[17:29:55]   [  9/44] logp gemma-4-26B-A4B-it               4C_1I  2026-05-02_exp_4      rows=  85  (4.5s)
+[17:30:07]   [ 10/44] logp gemma-4-26B-A4B-it               4C_2I  2026-05-02_exp_5      rows= 171  (12.1s)
+[17:30:19]   [ 11/44] logp gemma-4-26B-A4B-it               5C_1I  2026-05-02_exp_6      rows= 207  (12.4s)
+[17:30:38]   [ 12/44] logp gemma-4-26B-A4B-it               5C_2I  2026-05-02_exp_7      rows= 277  (18.9s)
+[17:30:43]   [ 13/44] logp gemma-4-31b                      4C_1I  2026-05-02_exp_0      rows=  97  (5.4s)
+[17:30:57]   [ 14/44] logp gemma-4-31b                      4C_2I  2026-05-02_exp_1      rows= 203  (13.4s)
+[17:31:07]   [ 15/44] logp gemma-4-31b                      5C_1I  2026-05-02_exp_2      rows= 174  (10.0s)
+[17:31:22]   [ 16/44] logp gemma-4-31b                      5C_2I  2026-05-02_exp_3      rows= 257  (15.7s)
+[17:31:27]   [ 17/44] logp gemma-4-E4B-it                   4C_1I  2026-05-02_exp_0      rows=  89  (4.8s)
+[17:31:38]   [ 18/44] logp gemma-4-E4B-it                   4C_2I  2026-05-02_exp_1      rows= 176  (10.8s)
+[17:31:51]   [ 19/44] logp gemma-4-E4B-it                   5C_1I  2026-05-02_exp_2      rows= 178  (13.4s)
+[17:32:11]   [ 20/44] logp gemma-4-E4B-it                   5C_2I  2026-05-02_exp_3      rows= 283  (19.3s)
+[17:32:37]   [ 21/44] logp llama-3.1-8b                     5C_2I  2026-05-02_exp_10     rows= 418  (25.8s)
+[17:32:46]   [ 22/44] logp llama-3.1-8b                     4C_1I  2026-05-02_exp_7      rows= 189  (9.3s)
+[17:32:59]   [ 23/44] logp llama-3.1-8b                     4C_2I  2026-05-02_exp_8      rows= 241  (13.3s)
+[17:33:15]   [ 24/44] logp llama-3.1-8b                     5C_1I  2026-05-02_exp_9      rows= 277  (15.8s)
+[17:33:34]   [ 25/44] logp llama-3.2-3b-instruct            4C_2I  2026-04-28_exp_5      rows= 256  (18.9s)
+[17:33:59]   [ 26/44] logp llama-3.2-3b-instruct            5C_1I  2026-04-28_exp_6      rows= 311  (24.8s)
+[17:34:11]   [ 27/44] logp llama-3.2-3b-instruct            4C_1I  2026-05-02_exp_0      rows= 201  (11.8s)
+[17:34:46]   [ 28/44] logp llama-3.2-3b-instruct            5C_2I  2026-05-02_exp_1      rows= 405  (35.9s)
+[17:34:53]   [ 29/44] logp llama-3.3-70b                    4C_1I  2026-05-02_exp_0      rows= 158  (6.4s)
+[17:35:05]   [ 30/44] logp llama-3.3-70b                    4C_2I  2026-05-02_exp_1      rows= 207  (11.9s)
+[17:35:16]   [ 31/44] logp llama-3.3-70b                    5C_1I  2026-05-02_exp_2      rows= 196  (11.3s)
+[17:35:35]   [ 32/44] logp llama-3.3-70b                    5C_2I  2026-05-02_exp_3      rows= 334  (18.5s)
+[17:35:40]   [ 33/44] logp qwen3-32b                        4C_1I  2026-05-02_exp_0      rows=  97  (5.6s)
+[17:35:55]   [ 34/44] logp qwen3-32b                        4C_2I  2026-05-02_exp_1      rows= 210  (15.2s)
+[17:36:07]   [ 35/44] logp qwen3-32b                        5C_1I  2026-05-02_exp_2      rows= 157  (11.1s)
+[17:36:26]   [ 36/44] logp qwen3-32b                        5C_2I  2026-05-02_exp_3      rows= 269  (19.5s)
+[17:36:30]   [ 37/44] logp qwen3-4b                         4C_1I  2026-05-02_exp_0      rows=  60  (3.6s)
+[17:36:41]   [ 38/44] logp qwen3-4b                         4C_2I  2026-05-02_exp_1      rows= 164  (11.3s)
+[17:36:52]   [ 39/44] logp qwen3-4b                         5C_1I  2026-05-02_exp_2      rows= 145  (10.7s)
+[17:37:10]   [ 40/44] logp qwen3-4b                         5C_2I  2026-05-02_exp_3      rows= 250  (18.3s)
+[17:37:17]   [ 41/44] logp qwen3-8B                         4C_1I  2026-04-27_exp_0      rows= 139  (6.8s)
+[17:37:31]   [ 42/44] logp qwen3-8B                         4C_2I  2026-04-27_exp_1      rows= 202  (13.9s)
+[17:37:44]   [ 43/44] logp qwen3-8B                         5C_1I  2026-04-27_exp_2      rows= 206  (13.3s)
+[17:38:03]   [ 44/44] logp qwen3-8B                         5C_2I  2026-05-02_exp_2      rows= 303  (19.4s)
+[17:38:04] Combined logprob: 10309 rows | 11 models × 4 configs -> 2026-05-03_tom_metrics_sweep_logprob.csv
+[17:38:04] 
+[17:38:04] ================================================================================
+[17:38:04] STAGE 3 — Cross-config + cross-model summary tables
+[17:38:04] ================================================================================
+[17:38:04]   saved 2026-05-03_impostor_x_model_x_config.csv
+[17:38:04]   saved 2026-05-03_crewmate_x_model_x_config.csv
+[17:38:04]   saved 2026-05-03_impostor_x_model.csv (+ numeric)
+[17:38:04]   saved 2026-05-03_crewmate_x_model.csv (+ numeric)
+[17:38:04] 
+[17:38:04] ================================================================================
+[17:38:04] STAGE 4 — Win-rate / win-category aggregations
+[17:38:04] ================================================================================
+[17:38:04]   deepseek-r1-distill-llama-8B     4C_1I  2026-05-02_exp_3      + 30 games
+[17:38:04]   deepseek-r1-distill-llama-8B     4C_2I  2026-05-02_exp_4      + 30 games
+[17:38:04]   deepseek-r1-distill-llama-8B     5C_1I  2026-05-02_exp_5      + 30 games
+[17:38:04]   deepseek-r1-distill-llama-8B     5C_2I  2026-05-02_exp_6      + 30 games
+[17:38:04]   deepseek-r1-distill-qwen-32b     4C_1I  2026-05-02_exp_0      + 37 games
+[17:38:04]   deepseek-r1-distill-qwen-32b     4C_2I  2026-05-02_exp_1      + 60 games
+[17:38:04]   deepseek-r1-distill-qwen-32b     5C_1I  2026-05-02_exp_2      + 60 games
+[17:38:04]   deepseek-r1-distill-qwen-32b     5C_2I  2026-05-02_exp_3      + 60 games
+[17:38:04]   gemma-4-26B-A4B-it               4C_1I  2026-05-02_exp_4      + 30 games
+[17:38:04]   gemma-4-26B-A4B-it               4C_2I  2026-05-02_exp_5      + 30 games
+[17:38:04]   gemma-4-26B-A4B-it               5C_1I  2026-05-02_exp_6      + 30 games
+[17:38:04]   gemma-4-26B-A4B-it               5C_2I  2026-05-02_exp_7      + 30 games
+[17:38:04]   gemma-4-31b                      4C_1I  2026-05-02_exp_0      + 30 games
+[17:38:04]   gemma-4-31b                      4C_2I  2026-05-02_exp_1      + 30 games
+[17:38:04]   gemma-4-31b                      5C_1I  2026-05-02_exp_2      + 30 games
+[17:38:04]   gemma-4-31b                      5C_2I  2026-05-02_exp_3      + 30 games
+[17:38:04]   gemma-4-E4B-it                   4C_1I  2026-05-02_exp_0      + 30 games
+[17:38:04]   gemma-4-E4B-it                   4C_2I  2026-05-02_exp_1      + 30 games
+[17:38:04]   gemma-4-E4B-it                   5C_1I  2026-05-02_exp_2      + 30 games
+[17:38:04]   gemma-4-E4B-it                   5C_2I  2026-05-02_exp_3      + 30 games
+[17:38:04]   llama-3.1-8b                     5C_2I  2026-05-02_exp_10     + 30 games
+[17:38:04]   llama-3.1-8b                     4C_1I  2026-05-02_exp_7      + 30 games
+[17:38:04]   llama-3.1-8b                     4C_2I  2026-05-02_exp_8      + 30 games
+[17:38:04]   llama-3.1-8b                     5C_1I  2026-05-02_exp_9      + 30 games
+[17:38:04]   llama-3.2-3b-instruct            4C_2I  2026-04-28_exp_5      + 30 games
+[17:38:04]   llama-3.2-3b-instruct            5C_1I  2026-04-28_exp_6      + 30 games
+[17:38:04]   llama-3.2-3b-instruct            4C_1I  2026-05-02_exp_0      + 30 games
+[17:38:04]   llama-3.2-3b-instruct            5C_2I  2026-05-02_exp_1      + 30 games
+[17:38:04]   llama-3.3-70b                    4C_1I  2026-05-02_exp_0      + 30 games
+[17:38:04]   llama-3.3-70b                    4C_2I  2026-05-02_exp_1      + 30 games
+[17:38:04]   llama-3.3-70b                    5C_1I  2026-05-02_exp_2      + 30 games
+[17:38:04]   llama-3.3-70b                    5C_2I  2026-05-02_exp_3      + 30 games
+[17:38:04]   qwen3-32b                        4C_1I  2026-05-02_exp_0      + 30 games
+[17:38:04]   qwen3-32b                        4C_2I  2026-05-02_exp_1      + 30 games
+[17:38:04]   qwen3-32b                        5C_1I  2026-05-02_exp_2      + 30 games
+[17:38:04]   qwen3-32b                        5C_2I  2026-05-02_exp_3      + 30 games
+[17:38:04]   qwen3-4b                         4C_1I  2026-05-02_exp_0      + 30 games
+[17:38:04]   qwen3-4b                         4C_2I  2026-05-02_exp_1      + 30 games
+[17:38:04]   qwen3-4b                         5C_1I  2026-05-02_exp_2      + 30 games
+[17:38:04]   qwen3-4b                         5C_2I  2026-05-02_exp_3      + 30 games
+[17:38:04]   qwen3-8B                         4C_1I  2026-04-27_exp_0      + 30 games
+[17:38:04]   qwen3-8B                         4C_2I  2026-04-27_exp_1      + 30 games
+[17:38:04]   qwen3-8B                         5C_1I  2026-04-27_exp_2      + 30 games
+[17:38:04]   qwen3-8B                         5C_2I  2026-05-02_exp_2      + 30 games
+[17:38:04]   saved 2026-05-03_game_outcomes_long.csv  (1417 games)
+[17:38:04]   saved win-rate + win-category CSVs (11 models × 4 configs)
+[17:38:04] 
+[17:38:04] ================================================================================
+[17:38:04] STAGE 5 — Radar plot with Pareto markers
+[17:38:04] ================================================================================
+[17:38:04]   saved 2026-05-03_radar.png  (crew_pareto=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]  imp_pareto=[0, 1, 2, 3, 4, 6, 8, 9, 10])
+[17:38:04] 
+[17:38:04] ================================================================================
+[17:38:04] STAGE 6 — Belief calibration  [44 experiments]
+[17:38:04] ================================================================================
+[17:38:04]   [  1/44] deepseek-r1-distill-llama-8B     2026-05-02_exp_3      snaps= 342  +verb= 1072  +lp= 1072  +paired= 1072
+[17:38:04]   [  2/44] deepseek-r1-distill-llama-8B     2026-05-02_exp_4      snaps= 486  +verb= 1928  +lp= 1928  +paired= 1928
+[17:38:04]   [  3/44] deepseek-r1-distill-llama-8B     2026-05-02_exp_5      snaps= 508  +verb= 1992  +lp= 1992  +paired= 1992
+[17:38:05]   [  4/44] deepseek-r1-distill-llama-8B     2026-05-02_exp_6      snaps= 806  +verb= 3904  +lp= 3904  +paired= 3904
+[17:38:05]   [  5/44] deepseek-r1-distill-qwen-32b     2026-05-02_exp_0      snaps= 306  +verb= 1040  +lp= 1040  +paired= 1040
+[17:38:05]   [  6/44] deepseek-r1-distill-qwen-32b     2026-05-02_exp_1      snaps= 915  +verb= 3548  +lp= 3548  +paired= 3548
+[17:38:05]   [  7/44] deepseek-r1-distill-qwen-32b     2026-05-02_exp_2      snaps= 838  +verb= 3488  +lp= 3488  +paired= 3488
+[17:38:05]   [  8/44] deepseek-r1-distill-qwen-32b     2026-05-02_exp_3      snaps=1260  +verb= 5562  +lp= 5562  +paired= 5562
+[17:38:05]   [  9/44] gemma-4-26B-A4B-it               2026-05-02_exp_4      snaps= 170  +verb=  524  +lp=  524  +paired=  524
+[17:38:05]   [ 10/44] gemma-4-26B-A4B-it               2026-05-02_exp_5      snaps= 342  +verb= 1296  +lp= 1296  +paired= 1296
+[17:38:05]   [ 11/44] gemma-4-26B-A4B-it               2026-05-02_exp_6      snaps= 414  +verb= 1628  +lp= 1628  +paired= 1628
+[17:38:05]   [ 12/44] gemma-4-26B-A4B-it               2026-05-02_exp_7      snaps= 554  +verb= 2572  +lp= 2572  +paired= 2572
+[17:38:05]   [ 13/44] gemma-4-31b                      2026-05-02_exp_0      snaps= 194  +verb=  632  +lp=  632  +paired=  632
+[17:38:05]   [ 14/44] gemma-4-31b                      2026-05-02_exp_1      snaps= 406  +verb= 1436  +lp= 1436  +paired= 1436
+[17:38:05]   [ 15/44] gemma-4-31b                      2026-05-02_exp_2      snaps= 348  +verb= 1360  +lp= 1360  +paired= 1360
+[17:38:05]   [ 16/44] gemma-4-31b                      2026-05-02_exp_3      snaps= 514  +verb= 2332  +lp= 2332  +paired= 2332
+[17:38:05]   [ 17/44] gemma-4-E4B-it                   2026-05-02_exp_0      snaps= 178  +verb=  520  +lp=  520  +paired=  520
+[17:38:05]   [ 18/44] gemma-4-E4B-it                   2026-05-02_exp_1      snaps= 352  +verb= 1336  +lp= 1336  +paired= 1336
+[17:38:05]   [ 19/44] gemma-4-E4B-it                   2026-05-02_exp_2      snaps= 356  +verb= 1332  +lp= 1332  +paired= 1332
+[17:38:05]   [ 20/44] gemma-4-E4B-it                   2026-05-02_exp_3      snaps= 566  +verb= 2496  +lp= 2496  +paired= 2496
+[17:38:05]   [ 21/44] llama-3.1-8b                     2026-05-02_exp_10     snaps= 835  +verb= 3915  +lp= 3915  +paired= 3915
+[17:38:05]   [ 22/44] llama-3.1-8b                     2026-05-02_exp_7      snaps= 377  +verb= 1281  +lp= 1281  +paired= 1281
+[17:38:05]   [ 23/44] llama-3.1-8b                     2026-05-02_exp_8      snaps= 482  +verb= 1956  +lp= 1956  +paired= 1956
+[17:38:05]   [ 24/44] llama-3.1-8b                     2026-05-02_exp_9      snaps= 551  +verb= 2224  +lp= 2224  +paired= 2224
+[17:38:05]   [ 25/44] llama-3.2-3b-instruct            2026-04-28_exp_5      snaps= 512  +verb= 2160  +lp= 2160  +paired= 2160
+[17:38:05]   [ 26/44] llama-3.2-3b-instruct            2026-04-28_exp_6      snaps= 622  +verb= 2832  +lp= 2832  +paired= 2832
+[17:38:05]   [ 27/44] llama-3.2-3b-instruct            2026-05-02_exp_0      snaps= 402  +verb= 1464  +lp= 1464  +paired= 1464
+[17:38:05]   [ 28/44] llama-3.2-3b-instruct            2026-05-02_exp_1      snaps= 810  +verb= 4192  +lp= 4192  +paired= 4192
+[17:38:05]   [ 29/44] llama-3.3-70b                    2026-05-02_exp_0      snaps= 316  +verb= 1096  +lp= 1096  +paired= 1096
+[17:38:05]   [ 30/44] llama-3.3-70b                    2026-05-02_exp_1      snaps= 414  +verb= 1524  +lp= 1524  +paired= 1524
+[17:38:05]   [ 31/44] llama-3.3-70b                    2026-05-02_exp_2      snaps= 392  +verb= 1524  +lp= 1524  +paired= 1524
+[17:38:05]   [ 32/44] llama-3.3-70b                    2026-05-02_exp_3      snaps= 668  +verb= 2852  +lp= 2852  +paired= 2852
+[17:38:05]   [ 33/44] qwen3-32b                        2026-05-02_exp_0      snaps= 194  +verb=  640  +lp=  640  +paired=  640
+[17:38:05]   [ 34/44] qwen3-32b                        2026-05-02_exp_1      snaps= 420  +verb= 1632  +lp= 1632  +paired= 1632
+[17:38:05]   [ 35/44] qwen3-32b                        2026-05-02_exp_2      snaps= 314  +verb= 1260  +lp= 1260  +paired= 1260
+[17:38:05]   [ 36/44] qwen3-32b                        2026-05-02_exp_3      snaps= 538  +verb= 2508  +lp= 2508  +paired= 2508
+[17:38:05]   [ 37/44] qwen3-4b                         2026-05-02_exp_0      snaps= 120  +verb=  364  +lp=  364  +paired=  364
+[17:38:05]   [ 38/44] qwen3-4b                         2026-05-02_exp_1      snaps= 328  +verb= 1256  +lp= 1256  +paired= 1256
+[17:38:06]   [ 39/44] qwen3-4b                         2026-05-02_exp_2      snaps= 290  +verb= 1168  +lp= 1168  +paired= 1168
+[17:38:06]   [ 40/44] qwen3-4b                         2026-05-02_exp_3      snaps= 500  +verb= 2332  +lp= 2332  +paired= 2332
+[17:38:06]   [ 41/44] qwen3-8B                         2026-04-27_exp_0      snaps= 278  +verb=  916  +lp=  916  +paired=  916
+[17:38:06]   [ 42/44] qwen3-8B                         2026-04-27_exp_1      snaps= 404  +verb= 1632  +lp= 1632  +paired= 1632
+[17:38:06]   [ 43/44] qwen3-8B                         2026-04-27_exp_2      snaps= 412  +verb= 1696  +lp= 1696  +paired= 1696
+[17:38:06]   [ 44/44] qwen3-8B                         2026-05-02_exp_2      snaps= 606  +verb= 2728  +lp= 2728  +paired= 2728
+[17:38:06] 
+[17:38:06] Snapshots parsed total: 20640 | with both signals: 20640
+[17:38:06] Paired predictions: 85150
+[17:38:06] All verbal predictions: 85150 | all logprob: 85150
+[17:38:06]   saved belief_calibration.png
+[17:38:07]   saved belief_calibration_by_config.png
+[17:38:12]   saved verbal_vs_logprob_disparity.png
+[17:38:12] 
+[17:38:12] ================================================================================
+[17:38:12] DONE
+[17:38:12] ================================================================================
+[17:38:12] All outputs in /home/yjangir1/scratchhbharad2/users/yjangir1/karan/eval-among-us-selfplay-rerun/results
+[17:38:12] Total elapsed: 1348.7s

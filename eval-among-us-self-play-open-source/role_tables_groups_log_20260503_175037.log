@@ -1,0 +1,43 @@
+[17:50:37] Reading /home/yjangir1/scratchhbharad2/users/yjangir1/karan/eval-among-us-selfplay-rerun/results/2026-05-03_tom_metrics_sweep.csv
+[17:50:37]   rows=10309  models=['deepseek-r1-distill-llama-8B', 'deepseek-r1-distill-qwen-32b', 'gemma-4-26B-A4B-it', 'gemma-4-31b', 'gemma-4-E4B-it', 'llama-3.1-8b', 'llama-3.2-3b-instruct', 'llama-3.3-70b', 'qwen3-32b', 'qwen3-4b', 'qwen3-8B']
+[17:50:37] 
+FAMILY tables
+[17:50:37]   family: gemma  models=['gemma-4-E4B-it', 'gemma-4-26B-A4B-it', 'gemma-4-31b']
+[17:50:37]     saved crewmate_x_model_family_gemma.csv  (+ numeric)
+[17:50:37]     saved crewmate_x_model_x_config_family_gemma.csv
+[17:50:37]     saved impostor_x_model_family_gemma.csv  (+ numeric)
+[17:50:37]     saved impostor_x_model_x_config_family_gemma.csv
+[17:50:37]   family: qwen3  models=['qwen3-4b', 'qwen3-8B', 'qwen3-32b']
+[17:50:37]     saved crewmate_x_model_family_qwen3.csv  (+ numeric)
+[17:50:37]     saved crewmate_x_model_x_config_family_qwen3.csv
+[17:50:37]     saved impostor_x_model_family_qwen3.csv  (+ numeric)
+[17:50:37]     saved impostor_x_model_x_config_family_qwen3.csv
+[17:50:37]   family: llama  models=['llama-3.2-3b-instruct', 'llama-3.1-8b', 'llama-3.3-70b']
+[17:50:37]     saved crewmate_x_model_family_llama.csv  (+ numeric)
+[17:50:38]     saved crewmate_x_model_x_config_family_llama.csv
+[17:50:38]     saved impostor_x_model_family_llama.csv  (+ numeric)
+[17:50:38]     saved impostor_x_model_x_config_family_llama.csv
+[17:50:38]   family: deepseek-distill  models=['deepseek-r1-distill-llama-8B', 'deepseek-r1-distill-qwen-32b']
+[17:50:38]     saved crewmate_x_model_family_deepseek-distill.csv  (+ numeric)
+[17:50:38]     saved crewmate_x_model_x_config_family_deepseek-distill.csv
+[17:50:38]     saved impostor_x_model_family_deepseek-distill.csv  (+ numeric)
+[17:50:38]     saved impostor_x_model_x_config_family_deepseek-distill.csv
+[17:50:38] 
+SIZE-BUCKET tables
+[17:50:38]   size: small_3-4B  models=['llama-3.2-3b-instruct', 'qwen3-4b', 'gemma-4-E4B-it']
+[17:50:38]     saved crewmate_x_model_size_small_3-4B.csv  (+ numeric)
+[17:50:38]     saved crewmate_x_model_x_config_size_small_3-4B.csv
+[17:50:38]     saved impostor_x_model_size_small_3-4B.csv  (+ numeric)
+[17:50:38]     saved impostor_x_model_x_config_size_small_3-4B.csv
+[17:50:38]   size: medium_8B  models=['deepseek-r1-distill-llama-8B', 'llama-3.1-8b', 'qwen3-8B']
+[17:50:38]     saved crewmate_x_model_size_medium_8B.csv  (+ numeric)
+[17:50:38]     saved crewmate_x_model_x_config_size_medium_8B.csv
+[17:50:38]     saved impostor_x_model_size_medium_8B.csv  (+ numeric)
+[17:50:38]     saved impostor_x_model_x_config_size_medium_8B.csv
+[17:50:38]   size: large_26-70B  models=['deepseek-r1-distill-qwen-32b', 'gemma-4-26B-A4B-it', 'gemma-4-31b', 'qwen3-32b', 'llama-3.3-70b']
+[17:50:38]     saved crewmate_x_model_size_large_26-70B.csv  (+ numeric)
+[17:50:38]     saved crewmate_x_model_x_config_size_large_26-70B.csv
+[17:50:38]     saved impostor_x_model_size_large_26-70B.csv  (+ numeric)
+[17:50:38]     saved impostor_x_model_x_config_size_large_26-70B.csv
+[17:50:38] 
+DONE

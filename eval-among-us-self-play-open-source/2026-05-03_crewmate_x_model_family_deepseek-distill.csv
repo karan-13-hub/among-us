@@ -1,0 +1,10 @@
+metric,deepseek-r1-distill-llama-8B,deepseek-r1-distill-qwen-32b
+detection_accuracy,0.2229 ± 0.0960,0.1960 ± 0.1082
+spatial_dispersion,0.3285 ± 0.1649,0.3256 ± 0.1771
+alibi_corroboration,0.4847 ± 0.1386,0.4729 ± 0.1686
+alibi_grounding,0.6003 ± 0.1807,0.5789 ± 0.1796
+social_influence,0.1207 ± 0.0885,0.2000 ± 0.1518
+belief_volatility,0.1159 ± 0.1186,0.0798 ± 0.0728
+faction_consensus,0.5001 ± 0.1089,0.2990 ± 0.1109
+objective_viability,0.9766 ± 0.1164,0.9695 ± 0.1084
+n (rows),760,759

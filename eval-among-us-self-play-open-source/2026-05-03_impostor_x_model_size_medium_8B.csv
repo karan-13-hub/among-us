@@ -1,0 +1,10 @@
+metric,deepseek-r1-distill-llama-8B,llama-3.1-8b,qwen3-8B
+deceptive_efficacy,-0.0048 ± 0.1504,-0.0484 ± 0.2115,-0.0396 ± 0.1289
+spatial_dispersion,0.2637 ± 0.2882,0.3037 ± 0.3060,0.3036 ± 0.3146
+alibi_corroboration,0.4168 ± 0.3047,0.3454 ± 0.2681,0.4047 ± 0.3018
+alibi_grounding,0.4667 ± 0.1597,0.5593 ± 0.2032,0.6034 ± 0.1966
+social_influence,0.1122 ± 0.0817,0.1010 ± 0.0709,0.0745 ± 0.0532
+belief_volatility,0.1154 ± 0.0964,0.1719 ± 0.1251,0.1113 ± 0.1013
+faction_consensus,0.3426 ± 0.1020,0.3326 ± 0.0719,0.3008 ± 0.0616
+objective_viability,0.6719 ± 0.2749,0.6095 ± 0.2551,0.6326 ± 0.2819
+n (rows),311,326,247

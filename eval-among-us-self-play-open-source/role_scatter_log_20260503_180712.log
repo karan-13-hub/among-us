@@ -1,0 +1,12 @@
+[18:07:12] Reading /home/yjangir1/scratchhbharad2/users/yjangir1/karan/eval-among-us-selfplay-rerun/results/2026-05-03_tom_metrics_sweep.csv
+[18:07:12]   rows=10309  models=['deepseek-r1-distill-llama-8B', 'deepseek-r1-distill-qwen-32b', 'gemma-4-26B-A4B-it', 'gemma-4-31b', 'gemma-4-E4B-it', 'llama-3.1-8b', 'llama-3.2-3b-instruct', 'llama-3.3-70b', 'qwen3-32b', 'qwen3-4b', 'qwen3-8B']
+[18:07:12] 
+View 1: detection_accuracy (crew) vs deceptive_efficacy (impostor)
+[18:07:12]   saved 2026-05-03_role_scatter_kpi.csv
+[18:07:13]   saved 2026-05-03_role_scatter_kpi.png
+[18:07:13] 
+View 2: crewmate-radar composite vs impostor-radar composite
+[18:07:13]   saved 2026-05-03_role_scatter_composite.csv
+[18:07:13]   saved 2026-05-03_role_scatter_composite.png
+[18:07:13] 
+DONE
