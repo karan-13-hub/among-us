@@ -1,0 +1,4 @@
+crew_model,qwen3-4b,llama-3.2-3b-instruct,gemma-4-E4B-it
+qwen3-4b,,0.8333333333333334,0.7166666666666667
+llama-3.2-3b-instruct,0.43333333333333335,,0.3416666666666667
+gemma-4-E4B-it,0.75,0.825,

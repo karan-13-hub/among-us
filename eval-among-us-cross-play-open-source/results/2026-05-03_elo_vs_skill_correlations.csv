@@ -1,0 +1,17 @@
+role,metric,is_primary_skill,n_models,pearson_r,spearman_r
+Crewmate,detection_accuracy,True,11,-0.855133708949958,-0.8127938616594571
+Crewmate,spatial_dispersion,False,11,0.7304329822563008,0.6803723898160624
+Crewmate,alibi_corroboration,False,11,-0.6057637217469756,-0.4566257649772231
+Crewmate,alibi_grounding,False,11,0.3565471282475729,0.06849386474658346
+Crewmate,social_influence,False,11,0.13904671693652976,0.027397545898633385
+Crewmate,belief_volatility,False,11,-0.5329555026520154,-0.3698668696315507
+Crewmate,faction_consensus,False,11,-0.8231827532110347,-0.8812877264060406
+Crewmate,objective_viability,False,11,-0.4138326185991659,-0.6118785250694789
+Impostor,deceptive_efficacy,True,11,0.5618814036163631,0.6272727272727273
+Impostor,spatial_dispersion,False,11,-0.5232138714165627,-0.35454545454545455
+Impostor,alibi_corroboration,False,11,-0.670392798058741,-0.5454545454545454
+Impostor,alibi_grounding,False,11,-0.013691848408663389,0.15454545454545454
+Impostor,social_influence,False,11,0.0884500556307153,0.16363636363636364
+Impostor,belief_volatility,False,11,-0.27785148525209524,-0.3090909090909091
+Impostor,faction_consensus,False,11,-0.6169629386196555,-0.37272727272727274
+Impostor,objective_viability,False,11,0.921726356149809,0.9727272727272728

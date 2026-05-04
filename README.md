@@ -145,32 +145,51 @@ Switch by changing the import in `agent.py` line 13.
 
 ## Models Evaluated
 
-### Single-Model Evaluations
+### Single-Model Evaluations (Self-Play)
 
 Each model plays all roles (Crewmate and Impostor) against copies of itself across multiple game configurations:
 
 | Model | Parameters | Backend | Notebook |
 |-------|-----------|---------|----------|
-| Qwen3-4B-Instruct | 4B | vLLM (local) | `eval_qwen3_4b.ipynb` |
-| Qwen3-8B / Qwen3-32B | 8B / 32B | vLLM (local, TP=2 for 32B) | `eval_qwen3_8b_32b.ipynb` |
-| Gemma-4-12B-it | 12B | vLLM (local) | `eval_gemma4.ipynb` |
-| Gemma-4-31B-it | 31B | vLLM (local, TP=2) | `eval_gemma4_31b.ipynb` |
+| Llama-3.2-3B-Instruct | 3B | vLLM (local) | `eval_qwen3_4b.ipynb` (re-purposed runs) |
+| Qwen3-4B-Instruct-2507 | 4B | vLLM (local) | `eval_qwen3_4b.ipynb` / `..._selfplay_rerun.ipynb` |
+| Gemma-4-E4B-it | 4B | vLLM (local) | `eval_gemma4.ipynb` |
 | DeepSeek-R1-Distill-Llama-8B | 8B | vLLM (local) | `eval_deepseek_llama.ipynb` |
-| DeepSeek-R1-Distill-Llama-70B | 70B | vLLM (local, TP=4) | `eval_deepseek_llama70b.ipynb` |
-| Phi-4-reasoning | 14.7B | vLLM (local, custom chat template) | `eval_phi4.ipynb` |
+| Llama-3.1-8B-Instruct | 8B | vLLM (local) | `eval_deepseek_llama.ipynb` (shared) |
+| Qwen3-8B | 8B | vLLM (local) | `eval_qwen3_8b_32b.ipynb` |
+| Phi-4-reasoning | 14.7B | vLLM (local, custom chat template) | `eval_phi4.ipynb` / `..._selfplay_rerun.ipynb` |
+| Gemma-4-26B-A4B-it | 26B | vLLM (local, TP=2) | `eval_gemma4.ipynb` |
+| DeepSeek-R1-Distill-Qwen-32B | 32B | vLLM (local, TP=2) | `eval_deepseek_r1_distill_qwen32b_selfplay_rerun.ipynb` |
+| Gemma-4-31B-it | 31B | vLLM (local, TP=2) | `eval_gemma4_31b.ipynb` / `..._selfplay_rerun.ipynb` |
+| Qwen3-32B | 32B | vLLM (local, TP=2) | `eval_qwen3_8b_32b.ipynb` / `eval_qwen3_32b_selfplay_rerun.ipynb` |
+| Llama-3.3-70B-Instruct (AWQ-INT4) | 70B | vLLM (local, TP=2) | `eval_llama70b_selfplay_rerun.ipynb` |
+
+Each self-play notebook runs 4 game configs × 30 games = **120 games** per model. Aggregated artifacts (per-model ToM metrics, win rates, family/size group radars, role-scatter, belief calibration) are committed under [`eval-among-us-self-play-open-source/`](eval-among-us-self-play-open-source/).
 
 ### Cross-Model Evaluations (Cross-Play)
 
-One model plays Crewmate while a different model plays Impostor, and vice versa. Each matchup runs both directions to control for role advantage:
+One model plays Crewmate while a different model plays Impostor, and vice versa. Each matchup runs both directions to control for role advantage. The cross-play sweep covers **11 unique models** in **22 directed matchups** (≈ 2 400+ games) spanning four model families and three size tiers:
 
-| Matchup | Notebook |
-|---------|----------|
-| Qwen3-32B vs Qwen3-4B | `eval_qwen3_cross_model.ipynb` |
-| Qwen3-32B vs Gemma-4-26B-A4B-it | `eval_cross_qwen3_32b_vs_gemma4_26b.ipynb` |
-| DeepSeek-R1-Distill-Qwen-32B vs Qwen3-32B | `eval_cross_deepseek_qwen32b_vs_qwen3_32b.ipynb` |
-| DeepSeek-R1-Distill-Llama-8B vs Phi-4-reasoning | `eval_cross_deepseek_llama8b_vs_phi4_reasoning.ipynb` |
+| Matchup | Tier | Notebook |
+|---------|------|----------|
+| Qwen3-4B ↔ Llama-3.2-3B-Instruct | small (3-4B) | `eval_cross_qwen3_4b_vs_llama32_3b.ipynb` |
+| Qwen3-4B ↔ Gemma-4-E4B-it | small (3-4B) | `eval_cross_qwen3_4b_vs_gemma4_E4B.ipynb` |
+| Llama-3.2-3B ↔ Gemma-4-E4B-it | small (3-4B) | `eval_cross_llama32_3b_vs_gemma4_E4B.ipynb` |
+| Llama-3.1-8B ↔ Qwen3-8B | medium (8B) | `eval_cross_llama_8b_vs_qwen3_8b.ipynb` |
+| Qwen3-8B ↔ DeepSeek-R1-Distill-Llama-8B | medium (8B) | `eval_cross_qwen3_8b_vs_deepseek_r1_distill_llama8b.ipynb` |
+| DeepSeek-R1-Distill-Llama-8B ↔ Llama-3.1-8B | medium (8B) | `eval_cross_deepseek_r1_distill_llama8b_vs_llama_8b.ipynb` |
+| Qwen3-32B ↔ Qwen3-4B | within-family across-size | `eval_cross_qwen3_32b_vs_qwen3_4b.ipynb` |
+| Llama-3.3-70B ↔ Llama-3.2-3B | within-family across-size | (data under `eval-cross-play-llama-among-us-llama-70b-vs-llama-3.1-8b-instruct/`) |
+| Gemma-4-31B ↔ Gemma-4-26B-A4B-it | within-family large | `eval_cross_gemma4_31b_vs_gemma4_26b_A4B.ipynb` |
+| Qwen3-32B ↔ Gemma-4-26B-A4B-it | across-family large | `eval_cross_qwen3_32b_vs_gemma4_26b.ipynb` |
+| Qwen3-32B ↔ Gemma-4-31B-it | across-family large | `eval_cross_qwen3_32b_vs_gemma_31b.ipynb` |
+| Gemma-4-26B-A4B-it ↔ DeepSeek-R1-Distill-Qwen-32B | across-family large | `eval_cross_gemma_26b_vs_deepseek_qwen32b.ipynb` |
+| Gemma-4-31B-it ↔ DeepSeek-R1-Distill-Qwen-32B | across-family large | `eval_cross_gemma4_31b_vs_deepseek_qwen32b_l40s.ipynb` |
+| DeepSeek-R1-Distill-Qwen-32B ↔ Qwen3-32B | across-family large | `eval_cross_deepseek_qwen32b_vs_qwen3_32b.ipynb` |
+| Llama-3.3-70B-Instruct (AWQ-INT4) ↔ Qwen3-32B | across-family large | `eval_cross_llama_70b_vs_qwen3_32b.ipynb` |
+| DeepSeek-R1-Distill-Llama-8B ↔ Phi-4-reasoning | (legacy) | `eval_cross_deepseek_llama8b_vs_phi4_reasoning.ipynb` |
 
-Each cross-play notebook runs 2 matchups × 4 game configs × 30 games = **240 games** per evaluation.
+Each cross-play notebook runs 2 ordered matchups × 4 game configs × 30 games = **240 games** per evaluation. Aggregated artifacts (matchup tables, win-rate matrix, ToM-vs-rating diagnostics, paper-quality figures, ELO/Bradley-Terry/TrueSkill comparison, bootstrap CIs, belief calibration) are committed under [`eval-among-us-cross-play-open-source/`](eval-among-us-cross-play-open-source/).
 
 ---
 
@@ -235,6 +254,78 @@ Both sources can be evaluated independently for calibration comparison.
 | 8 | **Objective-Viability Tradeoff** | Harmonic mean of productivity × survival | Balance between role objectives (tasks for crew, kills for imps) and staying alive |
 
 The pipeline handles multi-game experiments, per-game ground-truth attribution, room-adjacency graph distances on the Skeld map, and cross-meeting alibi consistency tracking.
+
+> **Sign-convention note.** `detection_accuracy` in the raw CSVs is **MSE** between the agent's beliefs and ground-truth roles — *lower is better*. Throughout the analysis pipeline and the published figures we report sign-corrected variants:
+> - **Detection skill** = `1 − detection_accuracy`
+> - **Belief stability** = `1 − belief_volatility`
+> - **Alibi opacity** = `1 − alibi_grounding`  (impostor-side; impostors want low grounding)
+
+### Cross-Play Analysis Pipeline
+
+Beyond the per-experiment metrics computation, the cross-play pipeline ([`eval-among-us-cross-play-open-source/`](eval-among-us-cross-play-open-source/)) adds:
+
+| Stage | Output |
+|-------|--------|
+| Matchup discovery + per-experiment ToM (verbal) | `<matchup>/results/<exp>_tom_metrics.csv` |
+| Matchup discovery + per-experiment ToM (logprob) | `<matchup>/results/<exp>_tom_metrics_logprob.csv` |
+| Combined sweep CSVs | `2026-MM-DD_tom_metrics_sweep_crossplay.csv` and `..._logprob_crossplay.csv` |
+| Win rates per matchup × config + crew × imp matrix | `winrate_matchup_x_config.csv`, `winrate_matrix_crew_x_imp.csv`, `win_categories_matchup.csv` |
+| Per-role tables (matchup-level + model-pooled) | `crewmate_x_matchup.csv`, `impostor_x_matchup.csv`, `crewmate_x_model_pooled.csv`, etc. |
+| Size-bucket round-robins | `triangle_small_3-4B_*`, `triangle_medium_8B_*`, `triangle_large_26-32B_*` |
+| Within-family vs across-family | `within_vs_across_family_winrates.csv`, `within_vs_across_family_metrics.csv` |
+| Cross-play vs self-play delta | `crossplay_vs_selfplay_metrics.csv` |
+| Per-role Pareto radar (within-bucket) | `radar_small_3-4B.png`, `radar_medium_8B.png`, `radar_large_26-32B.png` |
+| Rating-system comparison (ELO / Bradley-Terry / TrueSkill) | `rating_comparison_table.csv`, `fig13_rating_comparison.png` |
+| Bootstrap 95% CIs for rating-vs-skill correlations | `correlation_bootstrap.csv`, `fig14_correlation_bootstrap_CIs.png` |
+| Per-game-config breakdown | `per_config_correlations.csv`, `fig15_per_config_correlations.png` |
+| Belief-calibration reliability diagrams | `fig16_belief_calibration_paired.png`, `fig17_..._per_crew_model.png`, `fig18_..._family.png` |
+| Role-flip / outcome-symmetry table | `elo_role_vs_identity_flips.csv` |
+
+All scripts are runnable standalone:
+
+```bash
+cd eval-among-us-cross-play-open-source
+python3 run_full_analysis_crossplay.py        # Stages 0-8: per-exp ToM, win rates, triangles, radars, ELO diagnostics
+python3 run_logprob_metrics_crossplay.py      # logprob-derived ToM metrics for every exp
+python3 make_paper_figures.py                 # figs 8-12: family / size / win-categories / SP-vs-CP / sample sizes
+python3 make_rating_comparison.py             # fig 13: ELO vs Bradley-Terry vs TrueSkill, none recover deception
+python3 make_bootstrap_and_perconfig.py       # figs 14, 15: bootstrap CIs + per-config heatmaps
+python3 make_elo_plots.py                     # figs 1-5: per-role rating-vs-skill scatters + bar charts
+python3 make_belief_calibration.py            # figs 16-18: reliability diagrams + within/across-family calibration
+```
+
+### Headline Cross-Play Findings
+
+The cross-play sweep tests whether outcome-based ratings (the kind a "leaderboard" would use) align with the **direct** Theory-of-Mind skill metrics. Results from the 11-model, 22-matchup sweep:
+
+1. **Crewmate win rate IS a reasonable proxy for detection skill.**
+   Pearson r(crew log-odds rating, detection skill) = **+0.86** (Spearman +0.90).
+2. **Impostor win rate is NOT a clean proxy for deception.**
+   Pearson r(imp log-odds rating, deceptive_efficacy) = **+0.56**, but
+   r(imp log-odds rating, **objective_viability** — i.e. survival) = **+0.92**.
+   The impostor leaderboard is sorted by *who survived*, not *who deceived*.
+3. **Alibi opacity is anti-correlated with imp rating.**
+   r(imp rating, 1 − alibi_grounding) ≈ **−0.61**: high-rated impostors have *more* transparent alibis. They win *despite*, not because of, deception quality.
+4. **No off-the-shelf rating system fixes this.** Bradley-Terry and TrueSkill ratings — fitted on the same outcomes — also fail to track deception (r(BT_imp, deceptive_efficacy) = +0.37, r(TS_imp, deceptive_efficacy) = +0.25). The miscalibration is a property of *win-rate-based ratings in general*, not a property of ELO specifically. See [`fig13_rating_comparison.png`](eval-among-us-cross-play-open-source/results/fig13_rating_comparison.png).
+5. **Role-flip pairs.** For 5 of 10 unordered model pairs in the sweep, the *crew side* wins regardless of which model crews — the assigned role determines the outcome more than model identity does. A single rating per model is mathematically incapable of capturing this. See [`elo_role_vs_identity_flips.csv`](eval-among-us-cross-play-open-source/results/2026-05-03_elo_role_vs_identity_flips.csv).
+6. **Belief calibration is robust to opponent identity.** Within-family ECE = 0.009 vs across-family ECE = 0.009 (identical). Detection skill differences across models do not come from miscalibration — they come from how often models update beliefs sharply. See [`fig18_belief_calibration_family.png`](eval-among-us-cross-play-open-source/results/fig18_belief_calibration_family.png).
+
+The full critique with empirical evidence (correlations, role-flip table, win-category mix) is in [`WHY_ELO_IS_WRONG.md`](eval-among-us-cross-play-open-source/WHY_ELO_IS_WRONG.md).
+
+### Key Figures
+
+| Figure | What it shows |
+|---|---|
+| [fig1_crew_elo_vs_detection.png](eval-among-us-cross-play-open-source/results/fig1_crew_elo_vs_detection.png) | Crewmate log-odds rating vs detection skill — r = +0.86 |
+| [fig3_imp_elo_vs_deception.png](eval-among-us-cross-play-open-source/results/fig3_imp_elo_vs_deception.png) | Impostor log-odds rating vs deceptive_efficacy — r = +0.56 (moderate) |
+| [fig4_imp_elo_vs_survival.png](eval-among-us-cross-play-open-source/results/fig4_imp_elo_vs_survival.png) | Impostor log-odds rating vs survival — r = +0.92 (much stronger) |
+| [fig5_imp_elo_skill_correlations.png](eval-among-us-cross-play-open-source/results/fig5_imp_elo_skill_correlations.png) | Bar chart: imp rating's strongest correlate is survival, not deception |
+| [fig9_size_scaling.png](eval-among-us-cross-play-open-source/results/fig9_size_scaling.png) | Detection skill / deceptive efficacy vs model size, family-grouped |
+| [fig10_win_categories_per_matchup.png](eval-among-us-cross-play-open-source/results/fig10_win_categories_per_matchup.png) | Win-category mix (Ejection / Tasks / Outnumber / Timeout) per matchup |
+| [fig13_rating_comparison.png](eval-among-us-cross-play-open-source/results/fig13_rating_comparison.png) | ELO / Bradley-Terry / TrueSkill side-by-side — none recover deception |
+| [fig14_correlation_bootstrap_CIs.png](eval-among-us-cross-play-open-source/results/fig14_correlation_bootstrap_CIs.png) | Bootstrap 95% CIs on per-role correlations |
+
+For the self-play view, see [`eval-among-us-self-play-open-source/`](eval-among-us-self-play-open-source/) — radars, role-scatter, per-family belief calibration, win-rate critique, and per-config metric tables.
 
 ---
 
@@ -397,6 +488,23 @@ cd evaluations
 │   ├── evaluate_probes.py       # Probe evaluation
 │   ├── probe_datasets.py        # Dataset definitions
 │   └── plots.py                 # ROC and metric visualization
+├── eval-among-us-self-play-open-source/   # Self-play sweep artifacts (committed)
+│   ├── 2026-MM-DD_crewmate_x_model_*.csv
+│   ├── 2026-MM-DD_impostor_x_model_*.csv
+│   ├── 2026-MM-DD_radar_*.png             # Per-family / per-size radars
+│   ├── 2026-MM-DD_role_scatter_*.png      # Detection-vs-deception scatter
+│   ├── belief_calibration_*.png           # Reliability diagrams
+│   └── *_tom_metrics.csv                  # Per-(model, exp) ToM metrics
+├── eval-among-us-cross-play-open-source/  # Cross-play sweep artifacts (committed)
+│   ├── run_full_analysis_crossplay.py     # Stages 0-8 driver
+│   ├── run_logprob_metrics_crossplay.py   # Logprob-derived metrics for all matchups
+│   ├── make_paper_figures.py              # figs 8-12 (family, size, win-cat, delta)
+│   ├── make_rating_comparison.py          # fig 13 (ELO vs BT vs TrueSkill)
+│   ├── make_bootstrap_and_perconfig.py    # figs 14, 15 (bootstrap CIs, per-config)
+│   ├── make_elo_plots.py                  # figs 1-5 (rating-vs-skill scatters)
+│   ├── make_belief_calibration.py         # figs 16-18 (calibration)
+│   ├── WHY_ELO_IS_WRONG.md                # Methodological critique with empirical evidence
+│   └── results/                           # 90+ aggregated CSVs + 19 PNG/PDF figures
 ├── notebooks/                   # Exploratory notebooks
 ├── tests/                       # Unit tests
 ├── main.py                      # Game runner entry point

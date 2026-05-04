@@ -1,0 +1,85 @@
+role,config,metric,n_models,r
+Crewmate,4C_1I,"detection skill
+(1 − MSE)",11,0.5715110376412723
+Crewmate,4C_1I,objective_viability,11,-0.31104679344831193
+Crewmate,4C_1I,alibi_grounding,11,0.22016028268042342
+Crewmate,4C_1I,alibi_corroboration,11,-0.015157455585924337
+Crewmate,4C_1I,faction_consensus,11,-0.4973187306419683
+Crewmate,4C_1I,social_influence,11,-0.0022940965094220053
+Crewmate,4C_1I,"belief stability
+(1 − volatility)",11,-0.03848366795294165
+Crewmate,4C_1I,spatial_dispersion,11,0.023984161859938995
+Crewmate,4C_2I,"detection skill
+(1 − MSE)",11,0.5923489219191846
+Crewmate,4C_2I,objective_viability,11,0.2373292311610543
+Crewmate,4C_2I,alibi_grounding,11,0.5072376346604748
+Crewmate,4C_2I,alibi_corroboration,11,-0.7212379784341343
+Crewmate,4C_2I,faction_consensus,11,-0.8219127900254137
+Crewmate,4C_2I,social_influence,11,0.020205069504998893
+Crewmate,4C_2I,"belief stability
+(1 − volatility)",11,0.4762353041332166
+Crewmate,4C_2I,spatial_dispersion,11,0.69877043376662
+Crewmate,5C_1I,"detection skill
+(1 − MSE)",11,0.8318865439583579
+Crewmate,5C_1I,objective_viability,11,-0.6933332996532914
+Crewmate,5C_1I,alibi_grounding,11,-0.06608016387017564
+Crewmate,5C_1I,alibi_corroboration,11,-0.5712010612047312
+Crewmate,5C_1I,faction_consensus,11,-0.8236333264448504
+Crewmate,5C_1I,social_influence,11,0.5164251766329453
+Crewmate,5C_1I,"belief stability
+(1 − volatility)",11,0.6327548329451755
+Crewmate,5C_1I,spatial_dispersion,11,0.6143673428067904
+Crewmate,5C_2I,"detection skill
+(1 − MSE)",11,0.8665287283881936
+Crewmate,5C_2I,objective_viability,11,0.5184303834285248
+Crewmate,5C_2I,alibi_grounding,11,0.2331080286711873
+Crewmate,5C_2I,alibi_corroboration,11,-0.5122870729678312
+Crewmate,5C_2I,faction_consensus,11,-0.8034708472043153
+Crewmate,5C_2I,social_influence,11,0.25798215753071463
+Crewmate,5C_2I,"belief stability
+(1 − volatility)",11,0.5716423415035398
+Crewmate,5C_2I,spatial_dispersion,11,0.673912376089149
+Impostor,4C_1I,deceptive_efficacy,11,0.7133283566581778
+Impostor,4C_1I,"objective_viability
+(survival)",11,0.6584126739509505
+Impostor,4C_1I,"alibi opacity
+(1 − grounding)",11,0.3557384454863382
+Impostor,4C_1I,"belief stability
+(1 − volatility)",11,-0.1329966800062516
+Impostor,4C_1I,alibi_corroboration,11,
+Impostor,4C_1I,faction_consensus,11,-0.236978106079118
+Impostor,4C_1I,social_influence,11,-0.04606992405465182
+Impostor,4C_1I,spatial_dispersion,11,
+Impostor,4C_2I,deceptive_efficacy,11,0.5617895233767298
+Impostor,4C_2I,"objective_viability
+(survival)",11,0.8615466271757035
+Impostor,4C_2I,"alibi opacity
+(1 − grounding)",11,-0.3147414936819996
+Impostor,4C_2I,"belief stability
+(1 − volatility)",11,0.1803921814533197
+Impostor,4C_2I,alibi_corroboration,11,-0.37177525973178815
+Impostor,4C_2I,faction_consensus,11,-0.6660485674274158
+Impostor,4C_2I,social_influence,11,0.1906570972204698
+Impostor,4C_2I,spatial_dispersion,11,0.02602225511058816
+Impostor,5C_1I,deceptive_efficacy,11,0.8777396220381851
+Impostor,5C_1I,"objective_viability
+(survival)",11,0.6547899833807067
+Impostor,5C_1I,"alibi opacity
+(1 − grounding)",11,0.22381874572570154
+Impostor,5C_1I,"belief stability
+(1 − volatility)",11,0.024870481620760825
+Impostor,5C_1I,alibi_corroboration,11,
+Impostor,5C_1I,faction_consensus,11,-0.1608603028933188
+Impostor,5C_1I,social_influence,11,-0.27204219382692235
+Impostor,5C_1I,spatial_dispersion,11,
+Impostor,5C_2I,deceptive_efficacy,11,0.11799496406730402
+Impostor,5C_2I,"objective_viability
+(survival)",11,0.920997395540501
+Impostor,5C_2I,"alibi opacity
+(1 − grounding)",11,0.2821011894310908
+Impostor,5C_2I,"belief stability
+(1 − volatility)",11,0.28773431172720704
+Impostor,5C_2I,alibi_corroboration,11,-0.11903443897219866
+Impostor,5C_2I,faction_consensus,11,-0.6531184272243854
+Impostor,5C_2I,social_influence,11,-0.025207823322757547
+Impostor,5C_2I,spatial_dispersion,11,-0.35800080143287966

@@ -1,0 +1,4 @@
+crew_model,llama-3.1-8b,qwen3-8B,deepseek-r1-distill-llama-8B
+llama-3.1-8b,,0.65,0.925
+qwen3-8B,0.6916666666666667,,0.8666666666666667
+deepseek-r1-distill-llama-8B,0.35,0.36666666666666664,

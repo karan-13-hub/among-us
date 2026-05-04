@@ -1,0 +1,12 @@
+model_A,model_B,crew=A_imp=B_crew_winrate,crew=B_imp=A_crew_winrate,crew_advantage_when_A_crews,crew_advantage_when_B_crews,role_dominates_identity
+deepseek-r1-distill-llama-8B,llama-3.1-8b,0.35,0.925,False,True,False
+deepseek-r1-distill-llama-8B,qwen3-8B,0.36666666666666664,0.8666666666666667,False,True,False
+deepseek-r1-distill-qwen-32b,qwen3-32b,0.6833333333333333,0.975,True,True,True
+gemma-4-26B-A4B-it,gemma-4-31b,0.775,0.8333333333333334,True,True,True
+gemma-4-26B-A4B-it,qwen3-32b,0.9166666666666666,0.7916666666666666,True,True,True
+gemma-4-E4B-it,llama-3.2-3b-instruct,0.825,0.3416666666666667,True,False,False
+gemma-4-E4B-it,qwen3-4b,0.75,0.7166666666666667,True,True,True
+llama-3.1-8b,qwen3-8B,0.65,0.6916666666666667,True,True,True
+llama-3.2-3b-instruct,llama-3.3-70b,0.31666666666666665,0.8333333333333334,False,True,False
+llama-3.2-3b-instruct,qwen3-4b,0.43333333333333335,0.8333333333333334,False,True,False
+qwen3-32b,qwen3-4b,0.8666666666666667,0.6916666666666667,True,True,True

@@ -1,0 +1,5 @@
+crew_model,qwen3-32b,gemma-4-26B-A4B-it,gemma-4-31b,deepseek-r1-distill-qwen-32b
+qwen3-32b,,0.7916666666666666,,0.975
+gemma-4-26B-A4B-it,0.9166666666666666,,0.775,
+gemma-4-31b,,0.8333333333333334,,
+deepseek-r1-distill-qwen-32b,0.6833333333333333,,,

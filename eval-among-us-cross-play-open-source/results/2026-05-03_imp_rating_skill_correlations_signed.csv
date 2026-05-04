@@ -1,0 +1,9 @@
+metric,r_with_imp_logodds_rating,label
+objective_viability,0.8261734170660692,objective_viability (survival)
+deceptive_efficacy,0.6822917236323721,deceptive_efficacy (named skill)
+alibi_corroboration,-0.6316962624863987,alibi_corroboration
+alibi_opacity,-0.6240948282582626,alibi opacity (1 − grounding)
+belief_stability,0.3958670665029929,belief stability (1 − volatility)
+faction_consensus,-0.337174278656136,faction_consensus
+spatial_dispersion,-0.25512627411931693,spatial_dispersion
+social_influence,-0.011914961290677066,social_influence
